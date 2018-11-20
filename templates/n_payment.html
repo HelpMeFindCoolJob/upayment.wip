@@ -1,0 +1,176 @@
+{% extends "__base.html" %}
+{% load staticfiles %}
+{% block head_scripts_block %}
+<script type="text/javascript">
+    $(document).ready(function () {
+       $(':input[type="number"]').each(function () {
+          $(this).attr('min', '0.00');
+       });
+       $('.btn-download').click(function () {
+          var report_id = $(this).attr('id');
+          window.location = '/download_report_file/' + report_id;
+       });
+    });
+</script>
+<script type="text/javascript" src="{% static 'assets/widgets/tabs/tabs.js' %}"></script>
+<script language="javascript" type="text/javascript">
+    $(document).ready(function () {
+        var unknown_pay_label = $('#unknown-pay-label');
+        var unknown_pay_input = $('.unknowon-pay-input').find(':input');
+        var total_payments = parseFloat($('#total-pay-lbl').text().replace(',', '.'));
+    
+        $(".pay-input").find(":input").change(function () {
+            var int_sum = parseFloat($('input[name=internet_payment]').val().replace(',', '.'));
+            var mt_sum = parseFloat($('input[name=monthly_phone_payment]').val().replace(',', '.'));
+            var mg_sum = parseFloat($('input[name=mg_mn_payment]').val().replace(',', '.'));
+            var eq_sum = parseFloat($('input[name=equip_payment]').val().replace(',', '.'));
+            var re_sum = parseFloat($('input[name=reinstall_payment]').val().replace(',', '.'));
+            var ot_sum = parseFloat($('input[name=other_payment]').val().replace(',', '.'));
+            var unknowon_sum = total_payments - int_sum - mt_sum - mg_sum - eq_sum - re_sum - ot_sum;
+            if (unknowon_sum < 0 || unknowon_sum > total_payments){
+                $('#myModal').modal('show');
+                this.value = this.defaultValue;
+            } else {
+                this.defaultValue = this.value;
+                unknown_pay_label.text(unknowon_sum.toFixed(2));
+                if (unknowon_sum > 0) {
+                    $('.title-hero').css('color', 'red');
+                } else {
+                    $('.title-hero').css('color', '');
+                }
+                unknown_pay_input.val(unknowon_sum);
+            }
+        });
+    });
+</script>
+{% endblock head_scripts_block %}
+
+{% block actions_block %}
+<div class="box-sm">
+    <div class="pad5T pad5B pad10L pad10R dashboard-buttons-block clearfix">
+        <a href="#" onclick="document.forms['edit-form'].submit();" class="btn btn-azure vertical-button hover-blue-alt" title="">
+            <span class="glyph-icon icon-separator-vertical pad0A medium">
+                <i class="glyph-icon icon-check-square-o opacity-80 font-size-20"></i>
+            </span> 
+            Сохранить изменения
+        </a> 
+        <div class="divider"></div>
+        <a href="#" onclick="window.location.href='/payments_in_invoice/{{ payment.in_invoice.id }}'" class="btn btn-danger vertical-button hover-danger" title="">
+            <span class="glyph-icon icon-separator-vertical pad0A medium">
+                <i class="glyph-icon icon-close opacity-80 font-size-20"></i>
+            </span> 
+            Отменить
+        </a>
+    </div>
+</div>
+{% endblock actions_block %}
+
+{% block content_block %}
+<div id="page-title">
+    <h2>Редактирование платежа</h2>
+    <p class="mrg15B">Редактирование платежа с ID {{ payment.id }} ({{ payment.client_full_name }})</p>
+</div>
+<div class="panel">
+    <div class="panel-body">
+        {% if payment.unknown_payment > 0 %}
+        <h3 class="title-hero" style="color: red">Неучтенная сумма платежа - <span id="unknown-pay-label">{{ payment.unknown_payment }}</span> руб. </h3>
+        {% else %}
+        <h3 class="title-hero">Неучтенная сумма платежа - <span id="unknown-pay-label">{{ payment.unknown_payment }}</span> руб. </h3>
+        {% endif %}
+        <span id="total-pay-lbl" style="display: none;">{{ payment.total }}</span>
+        <div class="example-box-wrapper">
+            <form class="form-horizontal bordered-row" id="edit-form" action="/edit_payment/{{ payment.id }}" method="post">
+                <div class="form-group">
+                    <label class="col-sm-3 control-label">Плательщик</label>
+                    <div class="col-sm-6">
+                        {{ form.client_full_name }}
+                    </div>
+                </div>
+                <div class="form-group">
+                    <label class="col-sm-3 control-label">Номер счета Интернет</label>
+                    <div class="col-sm-6">
+                        {{ form.account_id_internet }}
+                    </div>
+                </div>
+                <div class="form-group">
+                    <label class="col-sm-3 control-label">Номер счета Телефония</label>
+                    <div class="col-sm-6">
+                        {{ form.account_id_phone }}
+                    </div>
+                </div>
+                <div class="form-group">
+                    <label class="col-sm-3 control-label">Адрес плательщика</label>
+                    <div class="col-sm-6">
+                        {{ form.client_address }}
+                    </div>
+                </div>
+                <div class="form-group">
+                    <label class="col-sm-3 control-label">Комментария банка</label>
+                    <div class="col-sm-6">
+                        {{ form.bank_comment }}
+                    </div>
+                </div>
+                <div class="form-group">
+                    <label class="col-sm-3 control-label">Оплата ИНТ</label>
+                    <div class="col-sm-6 pay-input">
+                        {{ form.internet_payment }}
+                    </div>
+                </div>
+                <div class="form-group">
+                    <label class="col-sm-3 control-label">Оплата АБМТ</label>
+                    <div class="col-sm-6 pay-input">
+                        {{ form.monthly_phone_payment }}
+                    </div>
+                </div>
+                <div class="form-group">
+                    <label class="col-sm-3 control-label">Оплата МГМН</label>
+                    <div class="col-sm-6 pay-input">
+                        {{ form.mg_mn_payment }}
+                    </div>
+                </div>
+                <div class="form-group">
+                    <label class="col-sm-3 control-label">Оплата ОБРД</label>
+                    <div class="col-sm-6 pay-input">
+                        {{ form.equip_payment }}
+                    </div>
+                </div>
+                <div class="form-group">
+                    <label class="col-sm-3 control-label">Оплата ПРУ</label>
+                    <div class="col-sm-6 pay-input">
+                        {{ form.reinstall_payment }}
+                    </div>
+                </div>
+                <div class="form-group">
+                    <label class="col-sm-3 control-label">Оплата ИНОЕ</label>
+                    <div class="col-sm-6 pay-input">
+                        {{ form.other_payment }}
+                    </div>
+                </div>
+                <div class="form-group" style="display: none;">
+                    <label class="col-sm-3 control-label">Оплата ИНОЕ</label>
+                    <div class="col-sm-6 unknowon-pay-input">
+                        {{ form.unknown_payment }}
+                    </div>
+                </div>
+            </form>
+        </div>
+    </div>
+</div>
+<!-- Error modal -->
+<div class="modal fade" id="myModal" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true">
+    <div class="modal-dialog">
+        <div class="modal-content">
+            <div class="modal-header">
+                <button type="button" class="close" data-dismiss="modal" aria-hidden="true">&times;</button>
+                <h4 class="modal-title">Ошибка валидации платежа</h4>
+            </div>
+            <div class="modal-body">
+                <h5 class="modal-title">Некорректные данные о платежах. Сумма всех платежей не должна превышать общую сумму платежа из банковской выписки либо быть ниже нее. Для продолжения работы проверьте корректность сумм.</h5>
+            </div>
+            <div class="modal-footer">
+                <button type="button" class="btn btn-primary" data-dismiss="modal">Закрыть</button>
+            </div>
+        </div>
+    </div>
+</div>
+{% endblock content_block %}

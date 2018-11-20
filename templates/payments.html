@@ -1,0 +1,705 @@
+<!DOCTYPE html>
+<html lang="en">
+   <head>
+      <style>#loading .svg-icon-loader {position: absolute;top: 50%;left: 50%;margin: -50px 0 0 -50px;}</style>
+      <meta charset="UTF-8">
+      <!--[if IE]>
+      <meta http-equiv='X-UA-Compatible' content='IE=edge,chrome=1'>
+      <![endif]-->
+      <title>UPayment Система работы с клиентскими платежами</title>
+      <meta name="description" content="">
+      <meta name="viewport" content="width=device-width,initial-scale=1,maximum-scale=1,user-scalable=no">
+   {% load extra_tags %}
+   {% load staticfiles %}
+      <link rel="apple-touch-icon-precomposed" sizes="144x144" href="{% static 'assets/images/icons/apple-touch-icon-144-precomposed.png' %}">
+      <link rel="apple-touch-icon-precomposed" sizes="114x114" href="{% static 'assets/images/icons/apple-touch-icon-114-precomposed.png' %}">
+      <link rel="apple-touch-icon-precomposed" sizes="72x72" href="{% static 'assets/images/icons/apple-touch-icon-72-precomposed.png' %}">
+      <link rel="apple-touch-icon-precomposed" href="{% static 'assets/images/icons/apple-touch-icon-57-precomposed.png' %}">
+      <link rel="shortcut icon" href="{% static 'assets/images/icons/favicon.png' %}">
+      <link rel="stylesheet" type="text/css" href="{% static 'assets/helpers/animate.css' %}">
+      <link rel="stylesheet" type="text/css" href="{% static 'assets/helpers/boilerplate.css' %}">
+      <link rel="stylesheet" type="text/css" href="{% static 'assets/helpers/border-radius.css' %}">
+      <link rel="stylesheet" type="text/css" href="{% static 'assets/helpers/grid.css' %}">
+      <link rel="stylesheet" type="text/css" href="{% static 'assets/helpers/page-transitions.css' %}">
+      <link rel="stylesheet" type="text/css" href="{% static 'assets/helpers/spacing.css' %}">
+      <link rel="stylesheet" type="text/css" href="{% static 'assets/helpers/typography.css' %}">
+      <link rel="stylesheet" type="text/css" href="{% static 'assets/helpers/utils.css' %}">
+      <link rel="stylesheet" type="text/css" href="{% static 'assets/helpers/colors.css' %}">
+      <link rel="stylesheet" type="text/css" href="{% static 'assets/material/ripple.css' %}">
+      <link rel="stylesheet" type="text/css" href="{% static 'assets/elements/badges.css' %}">
+      <link rel="stylesheet" type="text/css" href="{% static 'assets/elements/buttons.css' %}">
+      <link rel="stylesheet" type="text/css" href="{% static 'assets/elements/content-box.css' %}">
+      <link rel="stylesheet" type="text/css" href="{% static 'assets/elements/dashboard-box.css' %}">
+      <link rel="stylesheet" type="text/css" href="{% static 'assets/elements/forms.css' %}">
+{#      <link rel="stylesheet" type="text/css" href="{% static 'assets/elements/images.css' %}">#}
+      <link rel="stylesheet" type="text/css" href="{% static 'assets/elements/info-box.css' %}">
+{#      <link rel="stylesheet" type="text/css" href="{% static 'assets/elements/invoice.css' %}">#}
+{#      <link rel="stylesheet" type="text/css" href="{% static 'assets/elements/loading-indicators.css' %}">#}
+      <link rel="stylesheet" type="text/css" href="{% static 'assets/elements/menus.css' %}">
+      <link rel="stylesheet" type="text/css" href="{% static 'assets/elements/panel-box.css' %}">
+{#      <link rel="stylesheet" type="text/css" href="{% static 'assets/elements/response-messages.css' %}">#}
+      <link rel="stylesheet" type="text/css" href="{% static 'assets/elements/responsive-tables.css' %}">
+{#      <link rel="stylesheet" type="text/css" href="{% static 'assets/elements/ribbon.css' %}">#}
+{#      <link rel="stylesheet" type="text/css" href="{% static 'assets/elements/social-box.css' %}">#}
+      <link rel="stylesheet" type="text/css" href="{% static 'assets/elements/tables.css' %}">
+      <link rel="stylesheet" type="text/css" href="{% static 'assets/elements/tile-box.css' %}">
+      <link rel="stylesheet" type="text/css" href="{% static 'assets/elements/timeline.css' %}">
+      <link rel="stylesheet" type="text/css" href="{% static 'assets/icons/fontawesome/fontawesome.css' %}">
+      <link rel="stylesheet" type="text/css" href="{% static 'assets/icons/linecons/linecons.css' %}">
+      <link rel="stylesheet" type="text/css" href="{% static 'assets/icons/spinnericon/spinnericon.css' %}">
+      <link rel="stylesheet" type="text/css" href="{% static 'assets/widgets/accordion-ui/accordion.css' %}">
+{#      <link rel="stylesheet" type="text/css" href="{% static 'assets/widgets/calendar/calendar.css' %}">#}
+{#      <link rel="stylesheet" type="text/css" href="{% static 'assets/widgets/carousel/carousel.css' %}">#}
+{#      <link rel="stylesheet" type="text/css" href="{% static 'assets/widgets/charts/justgage/justgage.css' %}">#}
+{#      <link rel="stylesheet" type="text/css" href="{% static 'assets/widgets/charts/morris/morris.css' %}">#}
+{#      <link rel="stylesheet" type="text/css" href="{% static 'assets/widgets/charts/piegage/piegage.css' %}">#}
+{#      <link rel="stylesheet" type="text/css" href="{% static 'assets/widgets/charts/xcharts/xcharts.css' %}">#}
+      <link rel="stylesheet" type="text/css" href="{% static 'assets/widgets/chosen/chosen.css' %}">
+      <link rel="stylesheet" type="text/css" href="{% static 'assets/widgets/colorpicker/colorpicker.css' %}">
+      <link rel="stylesheet" type="text/css" href="{% static 'assets/widgets/datatable/datatable.css' %}">
+{#      <link rel="stylesheet" type="text/css" href="{% static 'assets/widgets/datepicker/datepicker.css' %}">#}
+{#      <link rel="stylesheet" type="text/css" href="{% static 'assets/widgets/datepicker-ui/datepicker.css' %}">#}
+{#      <link rel="stylesheet" type="text/css" href="{% static 'assets/widgets/daterangepicker/daterangepicker.css' %}">#}
+{#      <link rel="stylesheet" type="text/css" href="{% static 'assets/widgets/dialog/dialog.css' %}">#}
+      <link rel="stylesheet" type="text/css" href="{% static 'assets/widgets/dropdown/dropdown.css' %}">
+{#      <link rel="stylesheet" type="text/css" href="{% static 'assets/widgets/dropzone/dropzone.css' %}">#}
+{#      <link rel="stylesheet" type="text/css" href="{% static 'assets/widgets/file-input/fileinput.css' %}">#}
+{#      <link rel="stylesheet" type="text/css" href="{% static 'assets/widgets/input-switch/inputswitch.css' %}">#}
+{#      <link rel="stylesheet" type="text/css" href="{% static 'assets/widgets/input-switch/inputswitch-alt.css' %}">#}
+{#      <link rel="stylesheet" type="text/css" href="{% static 'assets/widgets/ionrangeslider/ionrangeslider.css' %}">#}
+{#      <link rel="stylesheet" type="text/css" href="{% static 'assets/widgets/jcrop/jcrop.css' %}">#}
+{#      <link rel="stylesheet" type="text/css" href="{% static 'assets/widgets/jgrowl-notifications/jgrowl.css' %}">#}
+{#      <link rel="stylesheet" type="text/css" href="{% static 'assets/widgets/loading-bar/loadingbar.css' %}">#}
+{#      <link rel="stylesheet" type="text/css" href="{% static 'assets/widgets/maps/vector-maps/vectormaps.css' %}">#}
+      <link rel="stylesheet" type="text/css" href="{% static 'assets/widgets/markdown/markdown.css' %}">
+      <link rel="stylesheet" type="text/css" href="{% static 'assets/widgets/modal/modal.css' %}">
+{#      <link rel="stylesheet" type="text/css" href="{% static 'assets/widgets/multi-select/multiselect.css' %}">#}
+      <link rel="stylesheet" type="text/css" href="{% static 'assets/widgets/multi-upload/fileupload.css' %}">
+      <link rel="stylesheet" type="text/css" href="{% static 'assets/widgets/nestable/nestable.css' %}">
+      <link rel="stylesheet" type="text/css" href="{% static 'assets/widgets/noty-notifications/noty.css' %}">
+      <link rel="stylesheet" type="text/css" href="{% static 'assets/widgets/popover/popover.css' %}">
+{#      <link rel="stylesheet" type="text/css" href="{% static 'assets/widgets/pretty-photo/prettyphoto.css' %}">#}
+{#      <link rel="stylesheet" type="text/css" href="{% static 'assets/widgets/progressbar/progressbar.css' %}">#}
+{#      <link rel="stylesheet" type="text/css" href="{% static 'assets/widgets/range-slider/rangeslider.css' %}">#}
+      <link rel="stylesheet" type="text/css" href="{% static 'assets/widgets/slidebars/slidebars.css' %}">
+      <link rel="stylesheet" type="text/css" href="{% static 'assets/widgets/slider-ui/slider.css' %}">
+      <link rel="stylesheet" type="text/css" href="{% static 'assets/widgets/summernote-wysiwyg/summernote-wysiwyg.css' %}">
+      <link rel="stylesheet" type="text/css" href="{% static 'assets/widgets/tabs-ui/tabs.css' %}">
+      <link rel="stylesheet" type="text/css" href="{% static 'assets/widgets/timepicker/timepicker.css' %}">
+{#      <link rel="stylesheet" type="text/css" href="{% static 'assets/widgets/tocify/tocify.css' %}">#}
+      <link rel="stylesheet" type="text/css" href="{% static 'assets/widgets/tooltip/tooltip.css' %}">
+{#      <link rel="stylesheet" type="text/css" href="{% static 'assets/widgets/touchspin/touchspin.css' %}">#}
+{#      <link rel="stylesheet" type="text/css" href="{% static 'assets/widgets/uniform/uniform.css' %}">#}
+{#      <link rel="stylesheet" type="text/css" href="{% static 'assets/widgets/wizard/wizard.css' %}">#}
+{#      <link rel="stylesheet" type="text/css" href="{% static 'assets/widgets/xeditable/xeditable.css' %}">#}
+{#      <link rel="stylesheet" type="text/css" href="{% static 'assets/snippets/chat.css' %}">#}
+      <link rel="stylesheet" type="text/css" href="{% static 'assets/snippets/files-box.css' %}">
+      <link rel="stylesheet" type="text/css" href="{% static 'assets/snippets/login-box.css' %}">
+{#      <link rel="stylesheet" type="text/css" href="{% static 'assets/snippets/notification-box.css' %}">#}
+{#      <link rel="stylesheet" type="text/css" href="{% static 'assets/snippets/progress-box.css' %}">#}
+{#      <link rel="stylesheet" type="text/css" href="{% static 'assets/snippets/todo.css' %}">#}
+      <link rel="stylesheet" type="text/css" href="{% static 'assets/snippets/user-profile.css' %}">
+      <link rel="stylesheet" type="text/css" href="{% static 'assets/snippets/mobile-navigation.css' %}">
+      <link rel="stylesheet" type="text/css" href="{% static 'assets/themes/admin/layout.css' %}">
+      <link rel="stylesheet" type="text/css" href="{% static 'assets/themes/admin/color-schemes/default.css' %}">
+      <link rel="stylesheet" type="text/css" href="{% static 'assets/themes/components/default.css' %}">
+      <link rel="stylesheet" type="text/css" href="{% static 'assets/themes/components/border-radius.css' %}">
+      <link rel="stylesheet" type="text/css" href="{% static 'assets/helpers/responsive-elements.css' %}">
+      <link rel="stylesheet" type="text/css" href="{% static 'assets/helpers/admin-responsive.css' %}">
+   {% block scripts %}
+      <script type="text/javascript" src="{% static 'assets/js-core/jquery-core.js' %}"></script>
+      <script type="text/javascript" src="{% static 'assets/js-core/jquery-ui-core.js' %}"></script>
+      <script type="text/javascript" src="{% static 'assets/js-core/jquery-ui-widget.js' %}"></script>
+      <script type="text/javascript" src="{% static 'assets/js-core/jquery-ui-mouse.js' %}"></script>
+      <script type="text/javascript" src="{% static 'assets/js-core/jquery-ui-position.js' %}"></script>
+      <script type="text/javascript" src="{% static 'assets/js-core/transition.js' %}"></script>
+      <script type="text/javascript" src="{% static 'assets/js-core/modernizr.js' %}"></script>
+      <script type="text/javascript" src="{% static 'assets/js-core/jquery-cookie.js' %}"></script>
+      <script type="text/javascript">
+         $(document).ready(function () {
+            $('.btn-download').click(function () {
+               var report_id = $(this).attr('id');
+               window.location = '/download_report_file/' + report_id;
+            });
+         });
+      </script>
+      <script type="text/javascript">
+        function check_payments(account_id){
+            var payment_errors = document.getElementsByClassName('incorrect-payment');
+            var account_errors = document.getElementsByClassName('incorrect-account');
+
+            if (payment_errors.length === 0 || account_errors.length === 0){
+                window.location.href = "/confirm_correctness_invoice/" + account_id;
+            }
+            else {
+                $('#myModal').modal('show');
+            }
+        }
+      </script>
+    {% endblock %}
+   </head>
+   <body>
+      <div id="sb-site">
+         <div class="sb-slidebar bg-black sb-right sb-style-overlay">
+            <div class="scrollable-content scrollable-slim-sidebar">
+               <div class="pad15A">
+				  <a href="#" title="" data-toggle="collapse" data-target="#sidebar-toggle-6" class="popover-title">Условные обозначения (Платежи) <span class="caret"></span></a>
+                  <div id="sidebar-toggle-6" class="collapse in">
+                     <ul class="files-box">
+                        <li>
+							<i class="files-icon glyph-icon font-green icon-info-circle"></i>
+							<div class="files-content">
+								<b>Счет (ИНТ)</b>
+								<div class="files-date">
+									<i class="glyph-icon icon-hand-o-right"></i>
+									Номер счета за услуги Интернет
+								</div>
+							</div>
+                        </li>
+						<li>
+							<i class="files-icon glyph-icon font-green icon-info-circle"></i>
+							<div class="files-content">
+								<b>Счет (ТЛФ)</b>
+								<div class="files-date">
+									<i class="glyph-icon icon-hand-o-right"></i>
+									Номер счета за услуги Телефонии
+								</div>
+							</div>
+                        </li>
+						<li>
+							<i class="files-icon glyph-icon font-green icon-info-circle"></i>
+							<div class="files-content">
+								<b>ИНТ (Платежи)</b>
+								<div class="files-date">
+									<i class="glyph-icon icon-hand-o-right"></i>
+									Платеж абон. плата за Интернет
+								</div>
+							</div>
+                        </li>
+						<li>
+							<i class="files-icon glyph-icon font-green icon-info-circle"></i>
+							<div class="files-content">
+								<b>АБМТ (Платежи)</b>
+								<div class="files-date">
+									<i class="glyph-icon icon-hand-o-right"></i>
+									Платеж абон. плата за Местную Телефонную связь
+								</div>
+							</div>
+                        </li>
+						<li>
+							<i class="files-icon glyph-icon font-green icon-info-circle"></i>
+							<div class="files-content">
+								<b>МГМН (Платежи)</b>
+								<div class="files-date">
+									<i class="glyph-icon icon-hand-o-right"></i>
+									Платеж за услуги МГ/МН связи
+								</div>
+							</div>
+                        </li>
+						<li>
+							<i class="files-icon glyph-icon font-green icon-info-circle"></i>
+							<div class="files-content">
+								<b>ОБРД (Платежи)</b>
+								<div class="files-date">
+									<i class="glyph-icon icon-hand-o-right"></i>
+									Платеж за приобретенное оборудование
+								</div>
+							</div>
+                        </li>
+						<li>
+							<i class="files-icon glyph-icon font-green icon-info-circle"></i>
+							<div class="files-content">
+								<b>ПРУ (Платежи)</b>
+								<div class="files-date">
+									<i class="glyph-icon icon-hand-o-right"></i>
+									Платеж за переустановку телефона
+								</div>
+							</div>
+                        </li>
+						<li>
+							<i class="files-icon glyph-icon font-green icon-info-circle"></i>
+							<div class="files-content">
+								<b>ИНОЕ (Платежи)</b>
+								<div class="files-date">
+									<i class="glyph-icon icon-hand-o-right"></i>
+									Платеж за прочие услуги
+								</div>
+							</div>
+                        </li>
+						<li>
+							<i class="files-icon glyph-icon font-red icon-info-circle"></i>
+							<div class="files-content">
+								<b>НЕУЧТ (Платежи)</b>
+								<div class="files-date">
+									<i class="glyph-icon icon-hand-o-right"></i>
+									Неизвестные платежи (невозможно провести)
+								</div>
+							</div>
+                        </li>
+                     </ul>
+                  </div>
+                  <div class="clear"></div>
+				  <a href="#" title="" data-toggle="collapse" data-target="#sidebar-toggle-6" class="popover-title">Условные обозначения (Счета клиентов) <span class="caret"></span></a>
+                  <div id="sidebar-toggle-6" class="collapse in">
+                     <ul class="files-box">
+                        <li>
+							<i class="files-icon glyph-icon font-red icon-info-circle"></i>
+							<div class="files-content">
+								<b>НЗВ (Статус номера счета клиента)</b>
+								<div class="files-date">
+									<i class="glyph-icon icon-hand-o-right"></i>
+									Невозможно определить номер счета
+								</div>
+							</div>
+                        </li>
+						<li>
+							<i class="files-icon glyph-icon font-green icon-info-circle"></i>
+							<div class="files-content">
+								<b>НЕТ (Статус номера счета клиента)</b>
+								<div class="files-date">
+									<i class="glyph-icon icon-hand-o-right"></i>
+									Нет счета по конкретной услуге
+								</div>
+							</div>
+                        </li>
+						<li>
+							<i class="files-icon glyph-icon font-green icon-info-circle"></i>
+							<div class="files-content">
+								<b>ИГН (Статус номера счета клиента)</b>
+								<div class="files-date">
+									<i class="glyph-icon icon-hand-o-right"></i>
+									Проигнорировать наличие счета по услуге
+								</div>
+							</div>
+                        </li>
+                     </ul>
+                  </div>
+                  <div class="clear"></div>
+                  <a href="#" title="" data-toggle="collapse" data-target="#sidebar-toggle-6" class="popover-title">Последние файлы отчетов <span class="caret"></span></a>
+                  <div id="sidebar-toggle-6" class="collapse in">
+                     <ul class="files-box">
+                      {% for report in reports %}
+                        <li>
+							<i class="files-icon glyph-icon font-green icon-file-word-o"></i>
+							<div class="files-content">
+								<b>{{ report.name_report }}.csv</b>
+								<div class="files-date">
+									<i class="glyph-icon icon-clock-o"></i> создан <b>{{ report.creation_date }}</b>
+								</div>
+							</div>
+							<div class="files-buttons">
+								<a href="#" class="btn btn-xs hover-info tooltip-button btn-download" id="{{ report.id }}" data-placement="left" title="Загрузить">
+									<i class="glyph-icon icon-cloud-download"></i>
+								</a>
+							</div>
+                        </li>
+                      {% endfor %}
+                     </ul>
+                  </div>
+			   </div>
+            </div>
+         </div>
+{#         <div id="loading">#}
+{#            <div class="svg-icon-loader"><img src="{% static 'assets/images/svg-loaders/bars.svg' %}" width="40" alt=""></div>#}
+{#         </div>#}
+         <div id="page-wrapper">
+            <div id="mobile-navigation"><button id="nav-toggle" class="collapsed" data-toggle="collapse" data-target="#page-sidebar"><span></span></button></div>
+            <div id="page-sidebar">
+               <div id="header-logo" class="logo-bg">
+                   <a href="/home/" class="logo-content-big" title="UPayment">
+                       UPayment <i>v0.0.1a</i>
+                       <span>Система управления платежами клиентов</span>
+                   </a>
+                   <a href="/home/" class="logo-content-small" title="DelightUI">
+                       UPayment <i>v0.0.1a</i>
+                       <span>Система управления платежами клиентов</span>
+                   </a>
+                   <a id="close-sidebar" href="#" title="Close sidebar">
+                       <i class="glyph-icon icon-outdent"></i></a>
+               </div>
+               <div class="scroll-sidebar">
+                  <ul id="sidebar-menu">
+                     <li class="header"><span>СТРАНИЦЫ</span></li>
+                     <li>
+						<a href="/home/" title="Начальная страница">
+							<i class="glyph-icon icon-bank"></i>
+							<span>Начальная страница</span>
+						</a>
+					</li>
+                  {% if user|in_group:"Администраторы" %}
+					<li>
+						<a href="#" title="Начальная страница">
+							<i class="glyph-icon icon-cogs"></i>
+							<span>Настройки</span>
+						</a>
+					</li>
+                  {% endif %}
+                     <li class="header"><span>ВЫПИСКИ</span></li>
+                     <li>
+                        <a href="javascript:void(0);" title="Выписки, загруженные на сервер">
+                            <i class="glyph-icon icon-plus-square-o"></i>
+                            <span>Загруженные</span>
+                        {% if uploaded_inv_count > 0 %}
+                            <span class="bs-badge badge-danger">{{ uploaded_inv_count }}</span>
+                        {% endif %}
+                        </a>
+                        <div class="sidebar-submenu">
+                        {% if uploaded_inv %}
+                           <ul>
+                           {% for inv in uploaded_inv %}
+                               <li><a href="/payments_in_invoice/{{ inv.id }}" title="{{ inv.name_invoice }}"><span>{{ inv.name_invoice }}</span></a></li>
+                           {% endfor %}
+                           </ul>
+                        {% else %}
+                            <ul>
+                              <li>
+                                  <a href="#" title="Ни одной выписки не загружено">
+                                      <span>Нет элементов для отображения</span>
+                                  </a>
+                              </li>
+                           </ul>
+                        {% endif %}
+                        </div>
+                     </li>
+                     <li>
+                        <a href="javascript:void(0);" title="Выписки, ожидающие подтверждения корректности">
+                            <i class="glyph-icon icon-clock-o"></i>
+                            <span>Ожидающие обработки</span>
+                        {% if waiting_inv_count > 0 %}
+                            <span class="bs-badge badge-danger">{{ waiting_inv_count }}</span>
+                        {% endif %}
+                        </a>
+                        <div class="sidebar-submenu">
+                        {% if waiting_inv %}
+                           <ul>
+                              <li>
+                                  <a href="/waiting_invoices/" title="Перейти к выпискам">
+                                      <span>Перейти к выпискам</span>
+                                  </a>
+                              </li>
+                           </ul>
+                        {% else %}
+                            <ul>
+                              <li>
+                                  <a href="#" title="Ни одна выписка не ожидает отправки на сервер">
+                                      <span>Нет элементов для отображения</span>
+                                  </a>
+                              </li>
+                           </ul>
+                        {% endif %}
+                        </div>
+                     </li>
+                     <li>
+                        <a href="javascript:void(0);" title="Последние 10 обработанных выписок">
+                            <i class="glyph-icon icon-linecons-wallet"></i>
+                            <span>Обработанные</span>
+                        {% if processed_inv_count > 0 %}
+                            <span class="bs-badge badge-danger">{{ processed_inv_count }}</span>
+                        {% endif %}
+                        </a>
+                        <div class="sidebar-submenu">
+                        {% if processed_inv %}
+                            <ul>
+                           {% for inv in processed_inv %}
+                               <li><a href="/processed_invoices/{{ inv.id }}" title="{{ inv.name_invoice }}"><span>{{ inv.name_invoice }}</span></a></li>
+                           {% endfor %}
+                           </ul>
+                        {% else %}
+                            <ul>
+                              <li>
+                                  <a href="#" title="Обработанные выписки отсутсвует в системе">
+                                      <span>Нет элементов для отображения</span>
+                                  </a>
+                              </li>
+                           </ul>
+                        {% endif %}
+                        </div>
+                     </li>
+                     <li class="header"><span>Отчеты</span></li>
+					 <li>
+						<a href="/reports/" title="Показать информацию по последним сгенерированным отчетам">
+							<i class="glyph-icon icon-file-text-o"></i>
+							<span>Последние отчеты</span>
+						</a>
+					</li>
+                  </ul>
+               </div>
+            </div>
+            <div id="page-content-wrapper">
+               <div id="page-content">
+                  <div id="page-header">
+                     <div id="header-nav-left">
+                        <a class="header-btn" id="logout-btn" href="/logout_user/" title="Выйти из системы"><i class="glyph-icon icon-sign-out"></i></a>
+                        <div class="user-account-btn dropdown">
+                           <a href="#" title="My Account" class="user-profile clearfix" data-toggle="dropdown">
+                               <img width="28" src="{% static 'assets/image-resources/gravatar.png' %}" alt="Profile image">
+                               <span>{{ user.first_name }} {{ user.last_name }}</span>
+                               <i class="glyph-icon icon-angle-down"></i>
+                           </a>
+                           <div class="dropdown-menu float-right">
+                              <div class="box-sm">
+                              {% if user|in_group:"Администраторы" %}
+                                  <div class="login-box clearfix">
+                                    <div class="user-img">
+										<img src="{% static 'assets/image-resources/gravatar.png' %}" alt="">
+									</div>
+                                    <div class="user-info">
+										<span>{{ user.first_name }} {{ user.last_name }}
+                                            <i>Администратор системы</i>
+										</span>
+									</div>
+                                 </div>
+                                 <div class="divider"></div>
+                                 <div class="button-pane button-pane-alt pad5L pad5R text-center">
+                                     <a href="#" class="btn btn-flat display-block font-normal btn-danger">
+                                         <i class="glyph-icon icon-envelope-o"></i> Рассылка пользователям
+                                     </a>
+                                 </div>
+                              {% elif user|in_group:"Пользователи" %}
+                                  <div class="login-box clearfix">
+                                    <div class="user-img">
+										<img src="{% static 'assets/image-resources/gravatar.png' %}" alt="">
+									</div>
+                                    <div class="user-info">
+										<span>{{ user.first_name }} {{ user.last_name }}
+                                            <i>Пользователь системы</i>
+										</span>
+									</div>
+                                 </div>
+                                 <div class="divider"></div>
+                                 <div class="button-pane button-pane-alt pad5L pad5R text-center">
+                                     <a href="#" class="btn btn-flat display-block font-normal btn-danger">
+                                         <i class="glyph-icon icon-envelope-o"></i> Вопрос администратору
+                                     </a>
+                                 </div>
+                              {% endif %}
+                              </div>
+                           </div>
+                        </div>
+                     </div>
+                     <div id="header-nav-right">
+						<div class="dropdown" id="cloud-btn">
+							<a href="#" data-placement="bottom" class="tooltip-button hdr-btn" id="fullscreen-btn" title="На весь экран">
+								<i class="glyph-icon icon-arrows-alt"></i>
+							</a>
+						</div>
+						<div class="dropdown" id="dashnav-btn">
+                           <a href="#" data-toggle="dropdown" data-placement="bottom" class="popover-button-header tooltip-button" title="Панель действий"><i class="glyph-icon icon-navicon"></i></a>
+                           <div class="dropdown-menu float-left">
+                              <div class="box-sm">
+                                 <div class="pad5T pad5B pad10L pad10R dashboard-buttons-block clearfix">
+									<a href="#" onclick="check_payments({{ current_invoice.id }})" class="btn btn-azure vertical-button hover-blue-alt" title="">
+										<span class="glyph-icon icon-separator-vertical pad0A medium">
+											<i class="glyph-icon icon-check-square-o opacity-80 font-size-20"></i>
+										</span>
+										Подтвердить корректность
+									</a>
+								</div>
+								<div class="divider"></div>
+								<div class="pad5T pad5B pad10L pad10R dashboard-buttons-block clearfix">
+									<a href="#" onclick="window.location.href='/delete_upload_invoice/{{ current_invoice.id }}'" class="btn btn-danger vertical-button hover-danger" title="">
+										<span class="glyph-icon icon-separator-vertical pad0A medium">
+											<i class="glyph-icon icon-close opacity-80 font-size-20"></i>
+										</span>
+										Удалить платежи
+									</a>
+								</div>
+							  </div>
+                           </div>
+                        </div>
+                        <div class="dropdown" id="cloud-btn">
+							<a href="#" data-placement="bottom" class="tooltip-button sb-toggle-right" title="Полезная информация">
+								<i class="glyph-icon icon-exclamation-circle"></i>
+							</a>
+						</div>
+                     </div>
+                  </div>
+               {% block otherScript %}
+				  <script type="text/javascript" src="{% static 'assets/widgets/datatable/datatable.js' %}"></script>
+				  <script type="text/javascript" src="{% static 'assets/widgets/datatable/datatable-bootstrap.js' %}"></script>
+				  <script type="text/javascript" src="{% static 'assets/widgets/datatable/datatable-tabletools.js' %}"></script>
+				  <script type="text/javascript">
+                     $(document).ready(function() {
+                        var table = $('#datatable-hide-columns').DataTable({
+                            "scrollY": "520px",
+                            "paging": false,
+							"info": false,
+							"targets": 'no-sort',
+							"bSort": false,
+							"order": [],
+							"keys": true
+                        });
+
+                         $('#datatable-hide-columns_filter').hide();
+
+                         $('a.toggle-vis').on( 'click', function (e) {
+                             e.preventDefault();
+
+                             // Get the column API object
+                             var column = table.column( $(this).attr('data-column') );
+
+                             // Toggle the visibility
+                             column.visible( ! column.visible() );
+
+							 var state = $(this).attr('state');
+							 if (state == 'on'){
+								$(this).css({
+									'background-color': 'grey',
+									'border-color': 'grey'
+								}).attr('state', 'off');
+							 } else {
+								$(this).css({
+									'background-color': '#dc1156',
+									'border-color': '#dc1156'
+								}).attr('state', 'on');
+							 }
+                         });
+
+						$(".edit-payment").click(function(){
+							var payment_id = $(this).attr('item');
+							window.location = '/edit_payment/' + payment_id;
+						});
+
+                     } );
+                  </script>
+               {% endblock %}
+                  <div id="page-title">
+                     <h2>Список платежей по выписке</h2>
+                     <p>Платежи по {{ current_invoice.name_invoice }}</p>
+                  </div>
+                  <div class="panel" id="tables-panel">
+                     <div class="panel-body">
+						<div class="example-box-wrapper">
+							<div class="size-md">
+							  <a class="btn btn-primary btn-md toggle-vis" href="#" data-column="0" state="on">Дата</a>
+							  <a class="btn btn-primary btn-md toggle-vis" href="#" data-column="1" state="on">Плательщик</a>
+							  <a class="btn btn-primary btn-md toggle-vis" href="#" data-column="2" state="on">Счет ИНТ</a>
+							  <a class="btn btn-primary btn-md toggle-vis" href="#" data-column="3" state="on">Счет ТЛФ</a>
+							  <a class="btn btn-primary btn-md toggle-vis" href="#" data-column="4" state="on">Адрес</a>
+							  <a class="btn btn-primary btn-md toggle-vis" href="#" data-column="5" state="on">Комментарий</a>
+							  <a class="btn btn-primary btn-md toggle-vis" href="#" data-column="6" state="on">ИНТ</a>
+							  <a class="btn btn-primary btn-md toggle-vis" href="#" data-column="7" state="on">АБМТ</a>
+							  <a class="btn btn-primary btn-md toggle-vis" href="#" data-column="8" state="on">МГМН</a>
+							  <a class="btn btn-primary btn-md toggle-vis" href="#" data-column="9" state="on">ОБРД</a>
+							  <a class="btn btn-primary btn-md toggle-vis" href="#" data-column="10" state="on">ПРУ</a>
+							  <a class="btn btn-primary btn-md toggle-vis" href="#" data-column="11" state="on">ИНОЕ</a>
+							  <a class="btn btn-primary btn-md toggle-vis" href="#" data-column="12" state="on">НЕУЧТ</a>
+							  <a class="btn btn-primary btn-md toggle-vis" href="#" data-column="13" state="on">Итого</a>
+							</div>
+                           <table id="datatable-hide-columns" class="table table-striped table-bordered" cellspacing="0" width="100%">
+                              <thead>
+                                 <tr>
+                                    <th>Дата</th>
+                                    <th>Плательщик</th>
+                                    <th>Счет ИНТ</th>
+                                    <th>Счет ТЛФ</th>
+                                    <th>Адрес</th>
+									<th>Комментарий</th>
+									<th>ИНТ</th>
+									<th>АБМТ</th>
+									<th>МГМН</th>
+									<th>ОБРД</th>
+									<th>ПРУ</th>
+									<th>ИНОЕ</th>
+									<th>НЕУЧТ</th>
+									<th>Итого</th>
+                                 </tr>
+                              </thead>
+                              <tbody>
+                              {% for payment in payments %}
+                                 <tr class="edit-payment" item="{{ payment.pk }}" style="cursor: pointer;">
+                                    <td>{{ payment.payment_date|date:"d-m-Y" }}</td>
+                                    <td>{{ payment.client_full_name }}</td>
+                                {% if payment.account_id_internet == 'НЗВ' %}
+                                    <td class="incorrect-account" style="color: red;"><b>{{ payment.account_id_internet }}</b></td>
+                                {% elif payment.account_id_internet == 'ИГН' and payment.internet_payment != 0 %}
+                                    <td class="incorrect-account" style="color: rgb(255, 115, 0);"><b>{{ payment.account_id_internet }}</b></td>
+                                {% else %}
+                                    <td>{{ payment.account_id_internet }}</td>
+                                {% endif %}
+                                {% if payment.account_id_phone == 'НЗВ' %}
+                                    <td class="incorrect-account" style="color: red;"><b>{{ payment.account_id_phone }}</b></td>
+                                {% elif payment.account_id_phone == 'ИГН' and payment.monthly_phone_payment != 0 and payment.mg_mn_payment != 0 %}
+                                    <td class="incorrect-account" style="color: rgb(255, 115, 0);"><b>{{ payment.account_id_phone }}</b></td>
+                                {% else %}
+                                    <td>{{ payment.account_id_phone }}</td>
+                                {% endif %}
+                                    <td>{{ payment.client_address }}</td>
+                                    <td>{{ payment.bank_comment }}</td>
+                                {% if payment.account_id_internet == 'ИГН' and payment.internet_payment != 0 %}
+                                    <td class="incorrect-payment" style="color: rgb(255, 115, 0);">{{ payment.internet_payment }}</td>
+                                {% else %}
+                                    <td>{{ payment.internet_payment }}</td>
+                                {% endif %}  
+                                {% if payment.account_id_phone == 'ИГН' and payment.monthly_phone_payment != 0 %}   
+                                    <td class="incorrect-payment" style="color: rgb(255, 115, 0);">{{ payment.monthly_phone_payment }}</td>
+                                {% else %}                               
+                                    <td>{{ payment.monthly_phone_payment }}</td>
+                                {% endif %}
+                                {% if payment.account_id_phone == 'ИГН' and payment.mg_mn_payment != 0 %}   
+                                    <td class="incorrect-payment" style="color: rgb(255, 115, 0);">{{ payment.mg_mn_payment }}</td>
+                                {% else %}
+                                    <td>{{ payment.mg_mn_payment }}</td>
+                                {% endif %}
+                                    <td>{{ payment.equip_payment }}</td>
+                                    <td>{{ payment.reinstall_payment }}</td>
+                                    <td>{{ payment.other_payment }}</td>
+                                 {% if payment.unknown_payment == 0.00 %}
+                                    <td>{{ payment.unknown_payment }}</td>
+                                 {% else %}
+                                    <td class="incorrect-payment" style="color: red;"><b>{{ payment.unknown_payment }}</b></td>
+                                 {% endif %}
+                                    <td><b>{{ payment.total }}</b></td>
+                                 </tr>
+                              {% endfor %}
+                              </tbody>
+                           </table>
+                        </div>
+                     </div>
+                  </div>
+                  <!-- Error modal -->
+                   <div class="modal fade" id="myModal" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true">
+                        <div class="modal-dialog">
+						<div class="modal-content">
+                            <div class="modal-header">
+								<button type="button" class="close" data-dismiss="modal" aria-hidden="true">&times;</button>
+								<h4 class="modal-title">Ошибка валидации платежей</h4>
+							</div>
+							<div class="modal-body">
+                                <h5 class="modal-title">Вы пытаетесь обработать некорректные платежи. Возможно некорректны идентификаторы лицевых счетов либо присутсвуют неопознанные виды платежей. Исправьте некорректные платежи и повторно попытайтесь обработать их.</h5>
+                            </div>
+									<div class="modal-footer">
+										<button type="button" class="btn btn-primary" data-dismiss="modal">Закрыть</button>
+									</div>
+								</div>
+                        </div>
+                    </div>
+               </div>
+            </div>
+         </div>
+      {% block otherScripts %}
+         <script type="text/javascript" src="{% static 'assets/widgets/dropdown/dropdown.js' %}"></script>
+         <script type="text/javascript" src="{% static 'assets/widgets/tooltip/tooltip.js' %}"></script>
+         <script type="text/javascript" src="{% static 'assets/widgets/popover/popover.js' %}"></script>
+    {#	<script type="text/javascript" src="{% static 'assets/widgets/progressbar/progressbar.js' %}"></script>#}
+         <script type="text/javascript" src="{% static 'assets/widgets/button/button.js' %}"></script>
+         <script type="text/javascript" src="{% static 'assets/widgets/collapse/collapse.js' %}"></script>
+         <script type="text/javascript" src="{% static 'assets/widgets/superclick/superclick.js' %}"></script>
+         <script type="text/javascript" src="{% static 'assets/widgets/input-switch/inputswitch-alt.js' %}"></script>
+         <script type="text/javascript" src="{% static 'assets/widgets/slimscroll/slimscroll.js' %}"></script>
+         <script type="text/javascript" src="{% static 'assets/widgets/slidebars/slidebars.js' %}"></script>
+         <script type="text/javascript" src="{% static 'assets/widgets/slidebars/slidebars-demo.js' %}"></script>
+         <script type="text/javascript" src="{% static 'assets/widgets/charts/piegage/piegage.js' %}"></script>
+         <script type="text/javascript" src="{% static 'assets/widgets/charts/piegage/piegage-demo.js' %}"></script>
+         <script type="text/javascript" src="{% static 'assets/widgets/screenfull/screenfull.js' %}"></script>
+         <script type="text/javascript" src="{% static 'assets/widgets/content-box/contentbox.js' %}"></script>
+         <script type="text/javascript" src="{% static 'assets/widgets/material/material.js' %}"></script>
+    {#	<script type="text/javascript" src="{% static 'assets/widgets/material/ripples.js' %}"></script>#}
+         <script type="text/javascript" src="{% static 'assets/widgets/overlay/overlay.js' %}"></script>
+         <script type="text/javascript" src="{% static 'assets/widgets/modal/modal.js' %}"></script>
+         <script type="text/javascript" src="{% static 'assets/js-init/widgets-init.js' %}"></script>
+         <script type="text/javascript" src="{% static 'assets/themes/admin/layout.js' %}"></script>
+      {% endblock %}
+      </div>
+   </body>
+</html>

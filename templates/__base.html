@@ -1,0 +1,106 @@
+{% load extra_tags %}
+{% load staticfiles %}
+<!DOCTYPE html>
+<html lang="ru">
+
+<head>
+    {% include "__header.html" %}
+    {% block head_scripts_block %}
+    {% endblock head_scripts_block %}
+</head>
+
+<body>
+    <div id="sb-site">
+        {% include "__right_sidebar.html" %} 
+        {% block loader_block %} 
+        {% endblock loader_block %}
+        <div id="page-wrapper">
+            {% include "__left_sidebar.html" %}
+            <div id="page-content-wrapper">
+                <div id="page-content">
+                    <div id="page-header">
+                        <div id="header-nav-left">
+                            <a class="header-btn" id="logout-btn" href="/logout_user/" title="Выйти из системы">
+                                <i class="glyph-icon icon-sign-out"></i>
+                            </a>
+                            <div class="user-account-btn dropdown">
+                                <a href="#" title="My Account" class="user-profile clearfix" data-toggle="dropdown">
+                                    <img width="28" src="{% static 'assets/image-resources/gravatar.png' %}" alt="Profile image">
+                                    <span>{{ user.first_name }} {{ user.last_name }}</span>
+                                    <i class="glyph-icon icon-angle-down"></i>
+                                </a>
+                                <div class="dropdown-menu float-right">
+                                    <div class="box-sm">
+                                        {% if user|in_group:"Администраторы" %}
+                                        <div class="login-box clearfix">
+                                            <div class="user-img">
+                                                <img src="{% static 'assets/image-resources/gravatar.png' %}" alt="">
+                                            </div>
+                                            <div class="user-info">
+                                                <span>{{ user.first_name }} {{ user.last_name }}
+                                                    <i>Администратор системы</i>
+                                                </span>
+                                            </div>
+                                        </div>
+                                        <div class="divider"></div>
+                                        <div class="button-pane button-pane-alt pad5L pad5R text-center">
+                                            <a href="#" class="btn btn-flat display-block font-normal btn-danger">
+                                                <i class="glyph-icon icon-envelope-o"></i> Рассылка пользователям
+                                            </a>
+                                        </div>
+                                        {% elif user|in_group:"Пользователи" %}
+                                        <div class="login-box clearfix">
+                                            <div class="user-img">
+                                                <img src="{% static 'assets/image-resources/gravatar.png' %}" alt="">
+                                            </div>
+                                            <div class="user-info">
+                                                <span>{{ user.first_name }} {{ user.last_name }}
+                                                    <i>Пользователь системы</i>
+                                                </span>
+                                            </div>
+                                        </div>
+                                        <div class="divider"></div>
+                                        <div class="button-pane button-pane-alt pad5L pad5R text-center">
+                                            <a href="#" class="btn btn-flat display-block font-normal btn-danger">
+                                                <i class="glyph-icon icon-envelope-o"></i> Вопрос администратору
+                                            </a>
+                                        </div>
+                                        {% endif %}
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                        <div id="header-nav-right">
+                            <div class="dropdown" id="cloud-btn">
+                                <a href="#" data-placement="bottom" class="tooltip-button hdr-btn" id="fullscreen-btn" title="На весь экран">
+                                    <i class="glyph-icon icon-arrows-alt"></i>
+                                </a>
+                            </div>
+                            <div class="dropdown" id="dashnav-btn">
+                                <a href="#" data-toggle="dropdown" data-placement="bottom" class="popover-button-header tooltip-button" title="Панель действий">
+                                    <i class="glyph-icon icon-navicon"></i>
+                                </a>
+                                <div class="dropdown-menu float-left">
+                                    {% block actions_block %}
+                                    {% endblock actions_block %}
+                                </div>
+                            </div>
+                            <div class="dropdown" id="cloud-btn">
+                                <a href="#" data-placement="bottom" class="tooltip-button sb-toggle-right" title="Полезная информация">
+                                    <i class="glyph-icon icon-exclamation-circle"></i>
+                                </a>
+                            </div>
+                        </div>
+                    </div>
+                    <script type="text/javascript" src="{% static 'assets/widgets/tabs/tabs.js' %}"></script> 
+                    {% block content_block %}                    
+                    {% endblock content_block %}
+                </div>
+            </div>
+        </div>
+    </div>
+</body>
+
+{% include "__footer.html" %}
+
+</html>

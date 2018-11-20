@@ -1,0 +1,143 @@
+{% load extra_tags %}
+<div id="mobile-navigation">
+    <button id="nav-toggle" class="collapsed" data-toggle="collapse" data-target="#page-sidebar">
+        <span></span>
+    </button>
+</div>
+<div id="page-sidebar">
+    <div id="header-logo" class="logo-bg">
+        <a href="home.html" class="logo-content-big" title="UPayment">
+            UPayment <i>v0.0.1a</i>
+            <span>Система управления платежами клиентов</span>
+        </a>
+        <a href="#" class="logo-content-small" title="DelightUI">
+            UPayment <i>v0.0.1a</i>
+            <span>Система управления платежами клиентов</span>
+        </a>
+        <a id="close-sidebar" href="#" title="Close sidebar">
+            <i class="glyph-icon icon-outdent"></i>
+        </a>
+    </div>
+    <div class="scroll-sidebar">
+        <ul id="sidebar-menu">
+            <li class="header"><span>СТРАНИЦЫ</span></li>
+            <li>
+                <a href="#" title="Начальная страница" class="active">
+                    <i class="glyph-icon icon-bank"></i>
+                    <span>Начальная страница</span>
+                </a>
+            </li>
+            {% if user|in_group:"Администраторы" %}
+            <li>
+                <a href="javascript:void(0);" title="Настройки">
+                    <i class="glyph-icon icon-cogs"></i>
+                    <span>Настройки</span>
+                </a>
+                <div class="sidebar-submenu">
+                    <ul>
+                        <li>
+                            <a href="/utm_settings/" title="Подключение к серверу"><span>Подключение к серверу</span></a>
+                        </li>
+                        <li>
+                            <a href="/sbr_profiles/" title="Подключение к серверу"><span>Профили СБР парсера</span></a>
+                        </li>
+                        <li>
+                            <a href="/settings/" title="Подключение к серверу"><span>Профили ВЗР парсера</span></a>
+                        </li>
+                    </ul>
+                </div>
+            </li>
+            {% endif %}
+            <li class="header"><span>ВЫПИСКИ</span></li>
+            <li>
+                <a href="javascript:void(0);" title="Выписки, загруженные на сервер">
+                    <i class="glyph-icon icon-plus-square-o"></i>
+                    <span>Загруженные</span>
+                    {% if uploaded_inv_count > 0 %}
+                    <span class="bs-badge badge-danger">{{ uploaded_inv_count }}</span>
+                    {% endif %}
+                </a>
+                <div class="sidebar-submenu">
+                    {% if uploaded_inv %}
+                    <ul>
+                        {% for inv in uploaded_inv %}
+                        <li><a href="/payments_in_invoice/{{ inv.id }}" title="{{ inv.name_invoice }}"><span>{{ inv.name_invoice }}
+                                </span></a></li>
+                        {% endfor %}
+                    </ul>
+                    {% else %}
+                    <ul>
+                        <li>
+                            <a href="#" title="Ни одной выписки не загружено">
+                                <span>Нет элементов для отображения</span>
+                            </a>
+                        </li>
+                    </ul>
+                    {% endif %}
+                </div>
+            </li>
+            <li>
+                <a href="javascript:void(0);" title="Выписки, ожидающие подтверждения корректности">
+                    <i class="glyph-icon icon-clock-o"></i>
+                    <span>Ожидающие обработки</span>
+                    {% if waiting_inv_count > 0 %}
+                    <span class="bs-badge badge-danger">{{ waiting_inv_count }}</span>
+                    {% endif %}
+                </a>
+                <div class="sidebar-submenu">
+                    {% if waiting_inv %}
+                    <ul>
+                        <li>
+                            <a href="/waiting_invoices/" title="Перейти к выпискам">
+                                <span>Перейти к выпискам</span>
+                            </a>
+                        </li>
+                    </ul>
+                    {% else %}
+                    <ul>
+                        <li>
+                            <a href="#" title="Ни одна выписка не ожидает отправки на сервер">
+                                <span>Нет элементов для отображения</span>
+                            </a>
+                        </li>
+                    </ul>
+                    {% endif %}
+                </div>
+            </li>
+            <li>
+                <a href="javascript:void(0);" title="Последние 10 обработанных выписок">
+                    <i class="glyph-icon icon-linecons-wallet"></i>
+                    <span>Обработанные</span>
+                    {% if processed_inv_count > 0 %}
+                    <span class="bs-badge badge-danger">{{ processed_inv_count }}</span>
+                    {% endif %}
+                </a>
+                <div class="sidebar-submenu">
+                    {% if processed_inv %}
+                    <ul>
+                        {% for inv in processed_inv %}
+                        <li><a href="/processed_invoices/{{ inv.id }}" title="{{ inv.name_invoice }}"><span>{{ inv.name_invoice }}
+                                </span></a></li>
+                        {% endfor %}
+                    </ul>
+                    {% else %}
+                    <ul>
+                        <li>
+                            <a href="#" title="Обработанные выписки отсутсвует в системе">
+                                <span>Нет элементов для отображения</span>
+                            </a>
+                        </li>
+                    </ul>
+                    {% endif %}
+                </div>
+            </li>
+            <li class="header"><span>Отчеты</span></li>
+            <li>
+                <a href="/reports/" title="Показать информацию по последним сгенерированным отчетам">
+                    <i class="glyph-icon icon-file-text-o"></i>
+                    <span>Последние отчеты</span>
+                </a>
+            </li>
+        </ul>
+    </div>
+</div>

@@ -1,0 +1,199 @@
+{% extends "__base.html" %} 
+{% load staticfiles %}
+{% block head_scripts_block %}
+<script type="text/javascript">
+    $(document).ready(function () {
+       $('.btn-download').click(function () {
+          var report_id = $(this).attr('id');
+          window.location = '/download_report_file/' + report_id;
+       });
+    });
+</script>
+<script type="text/javascript">
+    function check_payments(account_id){
+        var payment_errors = document.getElementsByClassName('incorrect-payment');
+        var account_errors = document.getElementsByClassName('incorrect-account');
+    
+        if (payment_errors.length === 0 || account_errors.length === 0){
+            window.location.href = "/confirm_correctness_invoice/" + account_id;
+        }
+        else {
+            $('#myModal').modal('show');
+        }
+    }
+</script>
+<script type="text/javascript" src="{% static 'assets/widgets/datatable/datatable.js' %}"></script>
+<script type="text/javascript" src="{% static 'assets/widgets/datatable/datatable-bootstrap.js' %}"></script>
+<script type="text/javascript" src="{% static 'assets/widgets/datatable/datatable-tabletools.js' %}"></script>
+<script type="text/javascript">
+    $(document).ready(function() {
+        var table = $('#datatable-hide-columns').DataTable({
+            "scrollY": "520px",
+            "paging": false,
+            "info": false,
+            "targets": 'no-sort',
+            "bSort": false,
+            "order": [],
+            "keys": true});
+        $('#datatable-hide-columns_filter').hide();
+        $('a.toggle-vis').on( 'click', function (e) {
+            e.preventDefault();
+            // Get the column API object
+            var column = table.column( $(this).attr('data-column') );
+            // Toggle the visibility
+            column.visible( ! column.visible() );
+            var state = $(this).attr('state');
+            if (state == 'on'){
+                $(this).css({
+                    'background-color': 'grey',
+                    'border-color': 'grey'}).attr('state', 'off');
+                } 
+                else {
+                    $(this).css({
+                        'background-color': '#dc1156',
+                        'border-color': '#dc1156'}).attr('state', 'on');
+                }
+        });
+        $(".edit-payment").click(function(){
+            var payment_id = $(this).attr('item');
+            window.location = '/edit_payment/' + payment_id;
+        });                 
+    });
+</script>
+{% endblock head_scripts_block %}
+
+{% block actions_block %}
+<div class="box-sm">
+    <div class="pad5T pad5B pad10L pad10R dashboard-buttons-block clearfix">
+        <a href="#" onclick="check_payments({{ current_invoice.id }})" class="btn btn-azure vertical-button hover-blue-alt" title="">
+            <span class="glyph-icon icon-separator-vertical pad0A medium">
+                <i class="glyph-icon icon-check-square-o opacity-80 font-size-20"></i>
+            </span>
+            Подтвердить корректность
+        </a>
+    </div>
+    <div class="divider"></div>
+    <div class="pad5T pad5B pad10L pad10R dashboard-buttons-block clearfix">
+        <a href="#" onclick="window.location.href='/delete_upload_invoice/{{ current_invoice.id }}'" class="btn btn-danger vertical-button hover-danger" title="">
+            <span class="glyph-icon icon-separator-vertical pad0A medium">
+                <i class="glyph-icon icon-close opacity-80 font-size-20"></i>
+            </span>
+            Удалить платежи
+        </a>
+    </div>
+</div>
+{% endblock actions_block %}
+
+{% block content_block %}
+<div id="page-title">
+    <h2>Список платежей по выписке</h2>
+    <p>Платежи по {{ current_invoice.name_invoice }}</p>
+</div>
+<div class="panel" id="tables-panel">
+    <div class="panel-body">
+        <div class="example-box-wrapper">
+            <div class="size-md">
+                <a class="btn btn-primary btn-md toggle-vis" href="#" data-column="0" state="on">Дата</a>
+                <a class="btn btn-primary btn-md toggle-vis" href="#" data-column="1" state="on">Плательщик</a>
+                <a class="btn btn-primary btn-md toggle-vis" href="#" data-column="2" state="on">Счет ИНТ</a>
+                <a class="btn btn-primary btn-md toggle-vis" href="#" data-column="3" state="on">Счет ТЛФ</a>
+                <a class="btn btn-primary btn-md toggle-vis" href="#" data-column="4" state="on">Адрес</a>
+                <a class="btn btn-primary btn-md toggle-vis" href="#" data-column="5" state="on">Комментарий</a>
+                <a class="btn btn-primary btn-md toggle-vis" href="#" data-column="6" state="on">ИНТ</a>
+                <a class="btn btn-primary btn-md toggle-vis" href="#" data-column="7" state="on">АБМТ</a>
+                <a class="btn btn-primary btn-md toggle-vis" href="#" data-column="8" state="on">МГМН</a>
+                <a class="btn btn-primary btn-md toggle-vis" href="#" data-column="9" state="on">ОБРД</a>
+                <a class="btn btn-primary btn-md toggle-vis" href="#" data-column="10" state="on">ПРУ</a>
+                <a class="btn btn-primary btn-md toggle-vis" href="#" data-column="11" state="on">ИНОЕ</a>
+                <a class="btn btn-primary btn-md toggle-vis" href="#" data-column="12" state="on">НЕУЧТ</a>
+                <a class="btn btn-primary btn-md toggle-vis" href="#" data-column="13" state="on">Итого</a>
+            </div>
+            <table id="datatable-hide-columns" class="table table-striped table-bordered" cellspacing="0" width="100%">
+                <thead>
+                    <tr>
+                        <th>Дата</th>
+                        <th>Плательщик</th>
+                        <th>Счет ИНТ</th>
+                        <th>Счет ТЛФ</th>
+                        <th>Адрес</th>
+                        <th>Комментарий</th>
+                        <th>ИНТ</th>
+                        <th>АБМТ</th>
+                        <th>МГМН</th>
+                        <th>ОБРД</th>
+                        <th>ПРУ</th>
+                        <th>ИНОЕ</th>
+                        <th>НЕУЧТ</th>
+                        <th>Итого</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    {% for payment in payments %}
+                    <tr class="edit-payment" item="{{ payment.pk }}" style="cursor: pointer;">
+                        <td>{{ payment.payment_date|date:"d-m-Y" }}</td>
+                        <td>{{ payment.client_full_name }}</td>
+                        {% if payment.account_id_internet == 'НЗВ' %}
+                        <td class="incorrect-account" style="color: red;"><b>{{ payment.account_id_internet }}</b></td>
+                        {% elif payment.account_id_internet == 'ИГН' and payment.internet_payment != 0 %}
+                        <td class="incorrect-account" style="color: rgb(255, 115, 0);"><b>{{ payment.account_id_internet }}</b></td>
+                        {% else %}
+                        <td>{{ payment.account_id_internet }}</td>
+                        {% endif %}
+                        {% if payment.account_id_phone == 'НЗВ' %}
+                        <td class="incorrect-account" style="color: red;"><b>{{ payment.account_id_phone }}</b></td>
+                        {% elif payment.account_id_phone == 'ИГН' and payment.monthly_phone_payment != 0 and payment.mg_mn_payment != 0 %}
+                        <td class="incorrect-account" style="color: rgb(255, 115, 0);"><b>{{ payment.account_id_phone }}</b></td>
+                        {% else %}
+                        <td>{{ payment.account_id_phone }}</td>
+                        {% endif %}
+                        <td>{{ payment.client_address }}</td>
+                        <td>{{ payment.bank_comment }}</td>
+                        {% if payment.account_id_internet == 'ИГН' and payment.internet_payment != 0 %}
+                        <td class="incorrect-payment" style="color: rgb(255, 115, 0);">{{ payment.internet_payment }}</td>
+                        {% else %}
+                        <td>{{ payment.internet_payment }}</td>
+                        {% endif %}  
+                        {% if payment.account_id_phone == 'ИГН' and payment.monthly_phone_payment != 0 %}   
+                        <td class="incorrect-payment" style="color: rgb(255, 115, 0);">{{ payment.monthly_phone_payment }}</td>
+                        {% else %}                               
+                        <td>{{ payment.monthly_phone_payment }}</td>
+                        {% endif %}
+                        {% if payment.account_id_phone == 'ИГН' and payment.mg_mn_payment != 0 %}   
+                        <td class="incorrect-payment" style="color: rgb(255, 115, 0);">{{ payment.mg_mn_payment }}</td>
+                        {% else %}
+                        <td>{{ payment.mg_mn_payment }}</td>
+                        {% endif %}
+                        <td>{{ payment.equip_payment }}</td>
+                        <td>{{ payment.reinstall_payment }}</td>
+                        <td>{{ payment.other_payment }}</td>
+                        {% if payment.unknown_payment == 0.00 %}
+                        <td>{{ payment.unknown_payment }}</td>
+                        {% else %}
+                        <td class="incorrect-payment" style="color: red;"><b>{{ payment.unknown_payment }}</b></td>
+                        {% endif %}
+                        <td><b>{{ payment.total }}</b></td>
+                    </tr>
+                    {% endfor %}
+                </tbody>
+            </table>
+        </div>
+    </div>
+</div>
+<!-- Error modal -->
+<div class="modal fade" id="myModal" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true">
+    <div class="modal-dialog">
+        <div class="modal-content">
+            <div class="modal-header">
+                <button type="button" class="close" data-dismiss="modal" aria-hidden="true">&times;</button>
+                <h4 class="modal-title">Ошибка валидации платежей</h4>
+            </div>
+            <div class="modal-body">
+                <h5 class="modal-title">Вы пытаетесь обработать некорректные платежи. Возможно некорректны идентификаторы лицевых счетов либо присутсвуют неопознанные виды платежей. Исправьте некорректные платежи и повторно попытайтесь обработать их.</h5>
+            </div>
+            <div class="modal-footer">
+                <button type="button" class="btn btn-primary" data-dismiss="modal">Закрыть</button>
+            </div>
+        </div>
+    </div>
+</div>
+{% endblock content_block %}

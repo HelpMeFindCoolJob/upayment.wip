@@ -1,0 +1,128 @@
+<style>
+    #loading .svg-icon-loader {
+        position: absolute;
+        top: 50%;
+        left: 50%;
+        margin: -50px 0 0 -50px;
+    }
+</style>
+<style>
+    .loading-message {
+        display: none;
+        position: absolute;
+        top: 61%;
+        width: 100%;
+        text-align: center;
+    }
+</style>
+<meta charset="UTF-8">
+<!--[if IE]>
+    <meta http-equiv='X-UA-Compatible' content='IE=edge,chrome=1'>
+<![endif]-->
+<title>UPayment Система работы с клиентскими платежами</title>
+<meta name="description" content="">
+<meta name="viewport" content="width=device-width,initial-scale=1,maximum-scale=1,user-scalable=no">
+{% load staticfiles %}
+<link rel="apple-touch-icon-precomposed" sizes="144x144" href="{% static 'assets/images/icons/apple-touch-icon-144-precomposed.png' %}">
+<link rel="apple-touch-icon-precomposed" sizes="114x114" href="{% static 'assets/images/icons/apple-touch-icon-114-precomposed.png' %}">
+<link rel="apple-touch-icon-precomposed" sizes="72x72" href="{% static 'assets/images/icons/apple-touch-icon-72-precomposed.png' %}">
+<link rel="apple-touch-icon-precomposed" href="{% static 'assets/images/icons/apple-touch-icon-57-precomposed.png' %}">
+<link rel="shortcut icon" href="{% static 'assets/images/icons/favicon.png' %}">
+<link rel="stylesheet" type="text/css" href="{% static 'assets/helpers/animate.css' %}">
+<link rel="stylesheet" type="text/css" href="{% static 'assets/helpers/boilerplate.css' %}">
+<link rel="stylesheet" type="text/css" href="{% static 'assets/helpers/border-radius.css' %}">
+<link rel="stylesheet" type="text/css" href="{% static 'assets/helpers/grid.css' %}">
+<link rel="stylesheet" type="text/css" href="{% static 'assets/helpers/page-transitions.css' %}">
+<link rel="stylesheet" type="text/css" href="{% static 'assets/helpers/spacing.css' %}">
+<link rel="stylesheet" type="text/css" href="{% static 'assets/helpers/typography.css' %}">
+<link rel="stylesheet" type="text/css" href="{% static 'assets/helpers/utils.css' %}">
+<link rel="stylesheet" type="text/css" href="{% static 'assets/helpers/colors.css' %}">
+<link rel="stylesheet" type="text/css" href="{% static 'assets/material/ripple.css' %}">
+<link rel="stylesheet" type="text/css" href="{% static 'assets/elements/badges.css' %}">
+<link rel="stylesheet" type="text/css" href="{% static 'assets/elements/buttons.css' %}">
+<link rel="stylesheet" type="text/css" href="{% static 'assets/elements/content-box.css' %}">
+<link rel="stylesheet" type="text/css" href="{% static 'assets/elements/dashboard-box.css' %}">
+<link rel="stylesheet" type="text/css" href="{% static 'assets/elements/forms.css' %}"> {#
+<link rel="stylesheet" type="text/css" href="{% static 'assets/elements/images.css' %}"> #}
+<link rel="stylesheet" type="text/css" href="{% static 'assets/elements/info-box.css' %}"> {#
+<link rel="stylesheet" type="text/css" href="{% static 'assets/elements/invoice.css' %}"> #} {#
+<link rel="stylesheet" type="text/css" href="{% static 'assets/elements/loading-indicators.css' %}"> #}
+<link rel="stylesheet" type="text/css" href="{% static 'assets/elements/menus.css' %}">
+<link rel="stylesheet" type="text/css" href="{% static 'assets/elements/panel-box.css' %}"> {#
+<link rel="stylesheet" type="text/css" href="{% static 'assets/elements/response-messages.css' %}"> #}
+<link rel="stylesheet" type="text/css" href="{% static 'assets/elements/responsive-tables.css' %}"> {#
+<link rel="stylesheet" type="text/css" href="{% static 'assets/elements/ribbon.css' %}"> #} {#
+<link rel="stylesheet" type="text/css" href="{% static 'assets/elements/social-box.css' %}"> #}
+<link rel="stylesheet" type="text/css" href="{% static 'assets/elements/tables.css' %}">
+<link rel="stylesheet" type="text/css" href="{% static 'assets/elements/tile-box.css' %}">
+<link rel="stylesheet" type="text/css" href="{% static 'assets/elements/timeline.css' %}">
+<link rel="stylesheet" type="text/css" href="{% static 'assets/icons/fontawesome/fontawesome.css' %}">
+<link rel="stylesheet" type="text/css" href="{% static 'assets/icons/linecons/linecons.css' %}">
+<link rel="stylesheet" type="text/css" href="{% static 'assets/icons/spinnericon/spinnericon.css' %}">
+<link rel="stylesheet" type="text/css" href="{% static 'assets/widgets/accordion-ui/accordion.css' %}"> {#
+<link rel="stylesheet" type="text/css" href="{% static 'assets/widgets/calendar/calendar.css' %}"> #} {#
+<link rel="stylesheet" type="text/css" href="{% static 'assets/widgets/carousel/carousel.css' %}"> #} {#
+<link rel="stylesheet" type="text/css" href="{% static 'assets/widgets/charts/justgage/justgage.css' %}"> #} {#
+<link rel="stylesheet" type="text/css" href="{% static 'assets/widgets/charts/morris/morris.css' %}"> #} {#
+<link rel="stylesheet" type="text/css" href="{% static 'assets/widgets/charts/piegage/piegage.css' %}"> #} {#
+<link rel="stylesheet" type="text/css" href="{% static 'assets/widgets/charts/xcharts/xcharts.css' %}"> #}
+<link rel="stylesheet" type="text/css" href="{% static 'assets/widgets/chosen/chosen.css' %}">
+<link rel="stylesheet" type="text/css" href="{% static 'assets/widgets/colorpicker/colorpicker.css' %}">
+<link rel="stylesheet" type="text/css" href="{% static 'assets/widgets/datatable/datatable.css' %}"> {#
+<link rel="stylesheet" type="text/css" href="{% static 'assets/widgets/datepicker/datepicker.css' %}"> #} {#
+<link rel="stylesheet" type="text/css" href="{% static 'assets/widgets/datepicker-ui/datepicker.css' %}"> #} {#
+<link rel="stylesheet" type="text/css" href="{% static 'assets/widgets/daterangepicker/daterangepicker.css' %}"> #} {#
+<link rel="stylesheet" type="text/css" href="{% static 'assets/widgets/dialog/dialog.css' %}"> #}
+<link rel="stylesheet" type="text/css" href="{% static 'assets/widgets/dropdown/dropdown.css' %}"> {#
+<link rel="stylesheet" type="text/css" href="{% static 'assets/widgets/dropzone/dropzone.css' %}"> #} {#
+<link rel="stylesheet" type="text/css" href="{% static 'assets/widgets/file-input/fileinput.css' %}"> #} {#
+<link rel="stylesheet" type="text/css" href="{% static 'assets/widgets/input-switch/inputswitch.css' %}"> #} {#
+<link rel="stylesheet" type="text/css" href="{% static 'assets/widgets/input-switch/inputswitch-alt.css' %}"> #} {#
+<link rel="stylesheet" type="text/css" href="{% static 'assets/widgets/ionrangeslider/ionrangeslider.css' %}"> #} {#
+<link rel="stylesheet" type="text/css" href="{% static 'assets/widgets/jcrop/jcrop.css' %}"> #} {#
+<link rel="stylesheet" type="text/css" href="{% static 'assets/widgets/jgrowl-notifications/jgrowl.css' %}"> #} {#
+<link rel="stylesheet" type="text/css" href="{% static 'assets/widgets/loading-bar/loadingbar.css' %}"> #} {#
+<link rel="stylesheet" type="text/css" href="{% static 'assets/widgets/maps/vector-maps/vectormaps.css' %}"> #}
+<link rel="stylesheet" type="text/css" href="{% static 'assets/widgets/markdown/markdown.css' %}">
+<link rel="stylesheet" type="text/css" href="{% static 'assets/widgets/modal/modal.css' %}"> {#
+<link rel="stylesheet" type="text/css" href="{% static 'assets/widgets/multi-select/multiselect.css' %}"> #}
+<link rel="stylesheet" type="text/css" href="{% static 'assets/widgets/multi-upload/fileupload.css' %}">
+<link rel="stylesheet" type="text/css" href="{% static 'assets/widgets/nestable/nestable.css' %}">
+<link rel="stylesheet" type="text/css" href="{% static 'assets/widgets/noty-notifications/noty.css' %}">
+<link rel="stylesheet" type="text/css" href="{% static 'assets/widgets/popover/popover.css' %}"> {#
+<link rel="stylesheet" type="text/css" href="{% static 'assets/widgets/pretty-photo/prettyphoto.css' %}"> #} {#
+<link rel="stylesheet" type="text/css" href="{% static 'assets/widgets/progressbar/progressbar.css' %}"> #} {#
+<link rel="stylesheet" type="text/css" href="{% static 'assets/widgets/range-slider/rangeslider.css' %}"> #}
+<link rel="stylesheet" type="text/css" href="{% static 'assets/widgets/slidebars/slidebars.css' %}">
+<link rel="stylesheet" type="text/css" href="{% static 'assets/widgets/slider-ui/slider.css' %}">
+<link rel="stylesheet" type="text/css" href="{% static 'assets/widgets/summernote-wysiwyg/summernote-wysiwyg.css' %}">
+<link rel="stylesheet" type="text/css" href="{% static 'assets/widgets/tabs-ui/tabs.css' %}">
+<link rel="stylesheet" type="text/css" href="{% static 'assets/widgets/timepicker/timepicker.css' %}"> {#
+<link rel="stylesheet" type="text/css" href="{% static 'assets/widgets/tocify/tocify.css' %}"> #}
+<link rel="stylesheet" type="text/css" href="{% static 'assets/widgets/tooltip/tooltip.css' %}"> {#
+<link rel="stylesheet" type="text/css" href="{% static 'assets/widgets/touchspin/touchspin.css' %}"> #} {#
+<link rel="stylesheet" type="text/css" href="{% static 'assets/widgets/uniform/uniform.css' %}"> #} {#
+<link rel="stylesheet" type="text/css" href="{% static 'assets/widgets/wizard/wizard.css' %}"> #} {#
+<link rel="stylesheet" type="text/css" href="{% static 'assets/widgets/xeditable/xeditable.css' %}"> #} {#
+<link rel="stylesheet" type="text/css" href="{% static 'assets/snippets/chat.css' %}"> #}
+<link rel="stylesheet" type="text/css" href="{% static 'assets/snippets/files-box.css' %}">
+<link rel="stylesheet" type="text/css" href="{% static 'assets/snippets/login-box.css' %}"> {#
+<link rel="stylesheet" type="text/css" href="{% static 'assets/snippets/notification-box.css' %}"> #} {#
+<link rel="stylesheet" type="text/css" href="{% static 'assets/snippets/progress-box.css' %}"> #} {#
+<link rel="stylesheet" type="text/css" href="{% static 'assets/snippets/todo.css' %}"> #}
+<link rel="stylesheet" type="text/css" href="{% static 'assets/snippets/user-profile.css' %}">
+<link rel="stylesheet" type="text/css" href="{% static 'assets/snippets/mobile-navigation.css' %}">
+<link rel="stylesheet" type="text/css" href="{% static 'assets/themes/admin/layout.css' %}">
+<link rel="stylesheet" type="text/css" href="{% static 'assets/themes/admin/color-schemes/default.css' %}">
+<link rel="stylesheet" type="text/css" href="{% static 'assets/themes/components/default.css' %}">
+<link rel="stylesheet" type="text/css" href="{% static 'assets/themes/components/border-radius.css' %}">
+<link rel="stylesheet" type="text/css" href="{% static 'assets/helpers/responsive-elements.css' %}">
+<link rel="stylesheet" type="text/css" href="{% static 'assets/helpers/admin-responsive.css' %}">
+<script type="text/javascript" src="{% static 'assets/js-core/jquery-core.js' %}"></script>
+<script type="text/javascript" src="{% static 'assets/js-core/jquery-ui-core.js' %}"></script>
+<script type="text/javascript" src="{% static 'assets/js-core/jquery-ui-widget.js' %}"></script>
+<script type="text/javascript" src="{% static 'assets/js-core/jquery-ui-mouse.js' %}"></script>
+<script type="text/javascript" src="{% static 'assets/js-core/jquery-ui-position.js' %}"></script>
+<script type="text/javascript" src="{% static 'assets/js-core/transition.js' %}"></script>
+<script type="text/javascript" src="{% static 'assets/js-core/modernizr.js' %}"></script>
+<script type="text/javascript" src="{% static 'assets/js-core/jquery-cookie.js' %}"></script>

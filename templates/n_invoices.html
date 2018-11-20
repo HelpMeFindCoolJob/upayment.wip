@@ -1,0 +1,166 @@
+{% extends "__base.html" %}
+{% load staticfiles %}
+
+{% block head_scripts_block %}
+<script type="text/javascript">
+    $(document).ready(function () {
+       $('#make-pays-btn').click(function () {
+           $('#loading').show();
+             $('.loading-message').show();
+       });
+       $('.btn-download').click(function () {
+          var report_id = $(this).attr('id');
+          window.location = '/download_report_file/' + report_id;
+       });
+    });
+</script>
+<script type="text/javascript">
+    function check_payments(account_id){
+        var payment_errors = document.getElementsByClassName('incorrect-payment');
+        var account_errors = document.getElementsByClassName('incorrect-account');
+    
+        if (payment_errors.length === 0 || account_errors.length === 0){
+            window.location.href = "/confirm_correctness_invoice/" + account_id;
+        }
+        else {
+            $('#myModal').modal('show');
+        }
+    }
+</script>
+<script type="text/javascript" src="{% static 'assets/widgets/datatable/datatable.js' %}"></script>
+<script type="text/javascript" src="{% static 'assets/widgets/datatable/datatable-bootstrap.js' %}"></script>
+<script type="text/javascript" src="{% static 'assets/widgets/datatable/datatable-tabletools.js' %}"></script>
+<script type="text/javascript">
+    $(document).ready(function() {
+        var table = $('#datatable-hide-columns').DataTable({
+            "scrollY": "520px",
+            "paging": false,
+            "info": false,
+            "targets": 'no-sort',
+            "bSort": false,
+            "order": [],
+            "keys": true
+        });
+    
+        $('#datatable-hide-columns_filter').hide();
+    
+        $('a.toggle-vis').on( 'click', function (e) {
+            e.preventDefault();
+    
+            // Get the column API object
+            var column = table.column( $(this).attr('data-column') );
+    
+            // Toggle the visibility
+            column.visible( ! column.visible() );
+    
+        var state = $(this).attr('state');
+        if (state == 'on'){
+            $(this).css({
+                'background-color': 'grey',
+                'border-color': 'grey'
+        }).attr('state', 'off');
+        } 
+        else {
+            $(this).css({
+                'background-color': '#dc1156',
+                'border-color': '#dc1156'
+                }).attr('state', 'on');
+            }
+        });    
+        $(".show-payments-inv").click(function(){
+            var invoice_id = $(this).attr('item');
+            window.location = '/delete_invoice_from_list/' + invoice_id;
+        });        
+    });
+</script>
+{% endblock %}
+
+{% block actions_block %}
+<div class="box-sm">
+    <div class="pad5T pad5B pad10L pad10R dashboard-buttons-block clearfix">
+        <a href="#" onclick="window.location.href='/make_payments/'" class="btn btn-azure vertical-button hover-blue-alt" id="make-pays-btn" title="">
+        <span class="glyph-icon icon-separator-vertical pad0A medium">
+        <i class="glyph-icon icon-check-square-o opacity-80 font-size-20"></i>
+        </span>
+        Провести платежи по выпискам
+        </a>
+    </div>
+    <div class="divider"></div>
+    <div class="pad5T pad5B pad10L pad10R dashboard-buttons-block clearfix">
+        <a href="#" onclick="window.location.href='/clear_waiting_invoices_list/'" class="btn btn-danger vertical-button hover-danger" title="">
+        <span class="glyph-icon icon-separator-vertical pad0A medium">
+        <i class="glyph-icon icon-close opacity-80 font-size-20"></i>
+        </span>
+        Очистить список
+        </a>
+    </div>
+</div>
+{% endblock actions_block %}
+
+{% block loader_block %}
+<div id="loading" style="display: none;">
+    <div class="svg-icon-loader">
+        <img src="{% static 'assets/images/svg-loaders/bars.svg' %}" width="40" alt="">
+    </div>
+    <div class="loading-message">
+        <h3>Отправка платежей на сервер. Пожалуйста, подождите.</h3>
+    </div>
+ </div>
+{% endblock loader_block %}
+
+{% block content_block %}
+<div id="page-title">
+    <h2>Выписки, ожидающие оплаты </h2>
+    <p>Список отредактированных выписок, готовых к оплате</p>
+</div>
+<div class="panel" id="tables-panel">
+    <div class="panel-body">
+        <div class="example-box-wrapper">
+            <div class="size-md">
+                <a class="btn btn-primary btn-md toggle-vis" href="#" data-column="1" state="on">Наименование</a>
+                <a class="btn btn-primary btn-md toggle-vis" href="#" data-column="2" state="on">Банк</a>
+                <a class="btn btn-primary btn-md toggle-vis" href="#" data-column="3" state="on">Платежей</a>
+                <a class="btn btn-primary btn-md toggle-vis" href="#" data-column="4" state="on">Сумма ИНТ</a>
+                <a class="btn btn-primary btn-md toggle-vis" href="#" data-column="7" state="on">Сумма АБМТ</a>
+                <a class="btn btn-primary btn-md toggle-vis" href="#" data-column="8" state="on">Сумма МГМН</a>
+                <a class="btn btn-primary btn-md toggle-vis" href="#" data-column="9" state="on">Сумма ОБРД</a>
+                <a class="btn btn-primary btn-md toggle-vis" href="#" data-column="10" state="on">Сумма ПРУ</a>
+                <a class="btn btn-primary btn-md toggle-vis" href="#" data-column="11" state="on">Сумма ИНОЕ</a>
+                <a class="btn btn-primary btn-md toggle-vis" href="#" data-column="13" state="on">Итого</a>
+            </div>
+            <table id="datatable-hide-columns" class="table table-striped table-bordered" cellspacing="0" width="100%">
+                <thead>
+                    <tr>
+                        <th>Наименование</th>
+                        <th>Банк</th>
+                        <th>Платежей</th>
+                        <th>Сумма ИНТ</th>
+                        <th>Сумма АБМТ</th>
+                        <th>Сумма МГМН</th>
+                        <th>Сумма ОБРД</th>
+                        <th>Сумма ПРУ</th>
+                        <th>Сумма ИНОЕ</th>
+                        <th>Итого</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    {% for inv in waiting_inv %}
+                    <tr class="show-payments-inv" item="{{ inv.id }}" style="cursor: pointer;">
+                        <td>{{ inv.name_invoice }}</td>
+                        <td>{{ inv.bank_id }}</td>
+                        <td>{{ inv.payments_count }}</td>
+                        <td>{{ inv.internet_payments }}</td>
+                        <td>{{ inv.monthly_phone_payments }}</td>
+                        <td>{{ inv.mg_mn_payments }}</td>
+                        <td>{{ inv.equip_payments }}</td>
+                        <td>{{ inv.reinstall_payments }}</td>
+                        <td>{{ inv.other_payments }}</td>
+                        <td>{{ inv.total_payments }}</td>
+                    </tr>
+                    {% endfor %}
+                </tbody>
+            </table>
+        </div>
+    </div>
+</div>
+{% endblock content_block %}

@@ -1,0 +1,723 @@
+<!DOCTYPE html>
+<html lang="en">
+   <head>
+      <style>#loading .svg-icon-loader {position: absolute;top: 50%;left: 50%;margin: -50px 0 0 -50px;}</style>
+      <meta charset="UTF-8">
+      <!--[if IE]>
+      <meta http-equiv='X-UA-Compatible' content='IE=edge,chrome=1'>
+      <![endif]-->
+      <title>UPayment Система работы с клиентскими платежами</title>
+      <meta name="description" content="">
+      <meta name="viewport" content="width=device-width,initial-scale=1,maximum-scale=1,user-scalable=no">
+   {% load extra_tags %}
+   {% load staticfiles %}
+      <link rel="apple-touch-icon-precomposed" sizes="144x144" href="{% static 'assets/images/icons/apple-touch-icon-144-precomposed.png' %}">
+      <link rel="apple-touch-icon-precomposed" sizes="114x114" href="{% static 'assets/images/icons/apple-touch-icon-114-precomposed.png' %}">
+      <link rel="apple-touch-icon-precomposed" sizes="72x72" href="{% static 'assets/images/icons/apple-touch-icon-72-precomposed.png' %}">
+      <link rel="apple-touch-icon-precomposed" href="{% static 'assets/images/icons/apple-touch-icon-57-precomposed.png' %}">
+      <link rel="shortcut icon" href="{% static 'assets/images/icons/favicon.png' %}">
+      <link rel="stylesheet" type="text/css" href="{% static 'assets/helpers/animate.css' %}">
+      <link rel="stylesheet" type="text/css" href="{% static 'assets/helpers/boilerplate.css' %}">
+      <link rel="stylesheet" type="text/css" href="{% static 'assets/helpers/border-radius.css' %}">
+      <link rel="stylesheet" type="text/css" href="{% static 'assets/helpers/grid.css' %}">
+      <link rel="stylesheet" type="text/css" href="{% static 'assets/helpers/page-transitions.css' %}">
+      <link rel="stylesheet" type="text/css" href="{% static 'assets/helpers/spacing.css' %}">
+      <link rel="stylesheet" type="text/css" href="{% static 'assets/helpers/typography.css' %}">
+      <link rel="stylesheet" type="text/css" href="{% static 'assets/helpers/utils.css' %}">
+      <link rel="stylesheet" type="text/css" href="{% static 'assets/helpers/colors.css' %}">
+      <link rel="stylesheet" type="text/css" href="{% static 'assets/material/ripple.css' %}">
+      <link rel="stylesheet" type="text/css" href="{% static 'assets/elements/badges.css' %}">
+      <link rel="stylesheet" type="text/css" href="{% static 'assets/elements/buttons.css' %}">
+      <link rel="stylesheet" type="text/css" href="{% static 'assets/elements/content-box.css' %}">
+      <link rel="stylesheet" type="text/css" href="{% static 'assets/elements/dashboard-box.css' %}">
+      <link rel="stylesheet" type="text/css" href="{% static 'assets/elements/forms.css' %}">
+{#      <link rel="stylesheet" type="text/css" href="{% static 'assets/elements/images.css' %}">#}
+      <link rel="stylesheet" type="text/css" href="{% static 'assets/elements/info-box.css' %}">
+{#      <link rel="stylesheet" type="text/css" href="{% static 'assets/elements/invoice.css' %}">#}
+{#      <link rel="stylesheet" type="text/css" href="{% static 'assets/elements/loading-indicators.css' %}">#}
+      <link rel="stylesheet" type="text/css" href="{% static 'assets/elements/menus.css' %}">
+      <link rel="stylesheet" type="text/css" href="{% static 'assets/elements/panel-box.css' %}">
+{#      <link rel="stylesheet" type="text/css" href="{% static 'assets/elements/response-messages.css' %}">#}
+      <link rel="stylesheet" type="text/css" href="{% static 'assets/elements/responsive-tables.css' %}">
+{#      <link rel="stylesheet" type="text/css" href="{% static 'assets/elements/ribbon.css' %}">#}
+{#      <link rel="stylesheet" type="text/css" href="{% static 'assets/elements/social-box.css' %}">#}
+      <link rel="stylesheet" type="text/css" href="{% static 'assets/elements/tables.css' %}">
+      <link rel="stylesheet" type="text/css" href="{% static 'assets/elements/tile-box.css' %}">
+      <link rel="stylesheet" type="text/css" href="{% static 'assets/elements/timeline.css' %}">
+      <link rel="stylesheet" type="text/css" href="{% static 'assets/icons/fontawesome/fontawesome.css' %}">
+      <link rel="stylesheet" type="text/css" href="{% static 'assets/icons/linecons/linecons.css' %}">
+      <link rel="stylesheet" type="text/css" href="{% static 'assets/icons/spinnericon/spinnericon.css' %}">
+      <link rel="stylesheet" type="text/css" href="{% static 'assets/widgets/accordion-ui/accordion.css' %}">
+{#      <link rel="stylesheet" type="text/css" href="{% static 'assets/widgets/calendar/calendar.css' %}">#}
+{#      <link rel="stylesheet" type="text/css" href="{% static 'assets/widgets/carousel/carousel.css' %}">#}
+{#      <link rel="stylesheet" type="text/css" href="{% static 'assets/widgets/charts/justgage/justgage.css' %}">#}
+{#      <link rel="stylesheet" type="text/css" href="{% static 'assets/widgets/charts/morris/morris.css' %}">#}
+{#      <link rel="stylesheet" type="text/css" href="{% static 'assets/widgets/charts/piegage/piegage.css' %}">#}
+{#      <link rel="stylesheet" type="text/css" href="{% static 'assets/widgets/charts/xcharts/xcharts.css' %}">#}
+      <link rel="stylesheet" type="text/css" href="{% static 'assets/widgets/chosen/chosen.css' %}">
+      <link rel="stylesheet" type="text/css" href="{% static 'assets/widgets/colorpicker/colorpicker.css' %}">
+      <link rel="stylesheet" type="text/css" href="{% static 'assets/widgets/datatable/datatable.css' %}">
+{#      <link rel="stylesheet" type="text/css" href="{% static 'assets/widgets/datepicker/datepicker.css' %}">#}
+{#      <link rel="stylesheet" type="text/css" href="{% static 'assets/widgets/datepicker-ui/datepicker.css' %}">#}
+{#      <link rel="stylesheet" type="text/css" href="{% static 'assets/widgets/daterangepicker/daterangepicker.css' %}">#}
+{#      <link rel="stylesheet" type="text/css" href="{% static 'assets/widgets/dialog/dialog.css' %}">#}
+      <link rel="stylesheet" type="text/css" href="{% static 'assets/widgets/dropdown/dropdown.css' %}">
+{#      <link rel="stylesheet" type="text/css" href="{% static 'assets/widgets/dropzone/dropzone.css' %}">#}
+{#      <link rel="stylesheet" type="text/css" href="{% static 'assets/widgets/file-input/fileinput.css' %}">#}
+{#      <link rel="stylesheet" type="text/css" href="{% static 'assets/widgets/input-switch/inputswitch.css' %}">#}
+{#      <link rel="stylesheet" type="text/css" href="{% static 'assets/widgets/input-switch/inputswitch-alt.css' %}">#}
+{#      <link rel="stylesheet" type="text/css" href="{% static 'assets/widgets/ionrangeslider/ionrangeslider.css' %}">#}
+{#      <link rel="stylesheet" type="text/css" href="{% static 'assets/widgets/jcrop/jcrop.css' %}">#}
+{#      <link rel="stylesheet" type="text/css" href="{% static 'assets/widgets/jgrowl-notifications/jgrowl.css' %}">#}
+{#      <link rel="stylesheet" type="text/css" href="{% static 'assets/widgets/loading-bar/loadingbar.css' %}">#}
+{#      <link rel="stylesheet" type="text/css" href="{% static 'assets/widgets/maps/vector-maps/vectormaps.css' %}">#}
+      <link rel="stylesheet" type="text/css" href="{% static 'assets/widgets/markdown/markdown.css' %}">
+      <link rel="stylesheet" type="text/css" href="{% static 'assets/widgets/modal/modal.css' %}">
+{#      <link rel="stylesheet" type="text/css" href="{% static 'assets/widgets/multi-select/multiselect.css' %}">#}
+      <link rel="stylesheet" type="text/css" href="{% static 'assets/widgets/multi-upload/fileupload.css' %}">
+      <link rel="stylesheet" type="text/css" href="{% static 'assets/widgets/nestable/nestable.css' %}">
+      <link rel="stylesheet" type="text/css" href="{% static 'assets/widgets/noty-notifications/noty.css' %}">
+      <link rel="stylesheet" type="text/css" href="{% static 'assets/widgets/popover/popover.css' %}">
+{#      <link rel="stylesheet" type="text/css" href="{% static 'assets/widgets/pretty-photo/prettyphoto.css' %}">#}
+{#      <link rel="stylesheet" type="text/css" href="{% static 'assets/widgets/progressbar/progressbar.css' %}">#}
+{#      <link rel="stylesheet" type="text/css" href="{% static 'assets/widgets/range-slider/rangeslider.css' %}">#}
+      <link rel="stylesheet" type="text/css" href="{% static 'assets/widgets/slidebars/slidebars.css' %}">
+      <link rel="stylesheet" type="text/css" href="{% static 'assets/widgets/slider-ui/slider.css' %}">
+      <link rel="stylesheet" type="text/css" href="{% static 'assets/widgets/summernote-wysiwyg/summernote-wysiwyg.css' %}">
+      <link rel="stylesheet" type="text/css" href="{% static 'assets/widgets/tabs-ui/tabs.css' %}">
+      <link rel="stylesheet" type="text/css" href="{% static 'assets/widgets/timepicker/timepicker.css' %}">
+{#      <link rel="stylesheet" type="text/css" href="{% static 'assets/widgets/tocify/tocify.css' %}">#}
+      <link rel="stylesheet" type="text/css" href="{% static 'assets/widgets/tooltip/tooltip.css' %}">
+{#      <link rel="stylesheet" type="text/css" href="{% static 'assets/widgets/touchspin/touchspin.css' %}">#}
+{#      <link rel="stylesheet" type="text/css" href="{% static 'assets/widgets/uniform/uniform.css' %}">#}
+{#      <link rel="stylesheet" type="text/css" href="{% static 'assets/widgets/wizard/wizard.css' %}">#}
+{#      <link rel="stylesheet" type="text/css" href="{% static 'assets/widgets/xeditable/xeditable.css' %}">#}
+{#      <link rel="stylesheet" type="text/css" href="{% static 'assets/snippets/chat.css' %}">#}
+      <link rel="stylesheet" type="text/css" href="{% static 'assets/snippets/files-box.css' %}">
+      <link rel="stylesheet" type="text/css" href="{% static 'assets/snippets/login-box.css' %}">
+{#      <link rel="stylesheet" type="text/css" href="{% static 'assets/snippets/notification-box.css' %}">#}
+{#      <link rel="stylesheet" type="text/css" href="{% static 'assets/snippets/progress-box.css' %}">#}
+{#      <link rel="stylesheet" type="text/css" href="{% static 'assets/snippets/todo.css' %}">#}
+      <link rel="stylesheet" type="text/css" href="{% static 'assets/snippets/user-profile.css' %}">
+      <link rel="stylesheet" type="text/css" href="{% static 'assets/snippets/mobile-navigation.css' %}">
+      <link rel="stylesheet" type="text/css" href="{% static 'assets/themes/admin/layout.css' %}">
+      <link rel="stylesheet" type="text/css" href="{% static 'assets/themes/admin/color-schemes/default.css' %}">
+      <link rel="stylesheet" type="text/css" href="{% static 'assets/themes/components/default.css' %}">
+      <link rel="stylesheet" type="text/css" href="{% static 'assets/themes/components/border-radius.css' %}">
+      <link rel="stylesheet" type="text/css" href="{% static 'assets/helpers/responsive-elements.css' %}">
+      <link rel="stylesheet" type="text/css" href="{% static 'assets/helpers/admin-responsive.css' %}">
+
+   {% block scripts %}
+      <script type="text/javascript" src="{% static 'assets/js-core/jquery-core.js' %}"></script>
+      <script type="text/javascript" src="{% static 'assets/js-core/jquery-ui-core.js' %}"></script>
+      <script type="text/javascript" src="{% static 'assets/js-core/jquery-ui-widget.js' %}"></script>
+      <script type="text/javascript" src="{% static 'assets/js-core/jquery-ui-mouse.js' %}"></script>
+      <script type="text/javascript" src="{% static 'assets/js-core/jquery-ui-position.js' %}"></script>
+      <script type="text/javascript" src="{% static 'assets/js-core/transition.js' %}"></script>
+      <script type="text/javascript" src="{% static 'assets/js-core/modernizr.js' %}"></script>
+      <script type="text/javascript" src="{% static 'assets/js-core/jquery-cookie.js' %}"></script>
+
+      <script type="text/javascript">
+         $(document).ready(function () {
+            $(':input[type="number"]').each(function () {
+               $(this).attr('min', '0.00');
+            });
+            $('.btn-download').click(function () {
+               var report_id = $(this).attr('id');
+               window.location = '/download_report_file/' + report_id;
+            });
+            $('.view-profile').hover(
+                function(){
+                    $(this).css('color', '#FFFFFF');
+                },
+                function(){
+                    $(this).css('color', '#858598');
+                }
+            );
+         });
+      </script>
+   {% endblock %}
+   </head>
+   <body>
+      <div id="sb-site">
+         <div class="sb-slidebar bg-black sb-right sb-style-overlay">
+            <div class="scrollable-content scrollable-slim-sidebar">
+               <div class="pad15A">
+				  <a href="#" title="" data-toggle="collapse" data-target="#sidebar-toggle-6" class="popover-title">Условные обозначения (Платежи) <span class="caret"></span></a>
+                  <div id="sidebar-toggle-6" class="collapse in">
+                     <ul class="files-box">
+                        <li>
+							<i class="files-icon glyph-icon font-green icon-info-circle"></i>
+							<div class="files-content">
+								<b>Счет (ИНТ)</b>
+								<div class="files-date">
+									<i class="glyph-icon icon-hand-o-right"></i>
+									Номер счета за услуги Интернет
+								</div>
+							</div>
+                        </li>
+						<li>
+							<i class="files-icon glyph-icon font-green icon-info-circle"></i>
+							<div class="files-content">
+								<b>Счет (ТЛФ)</b>
+								<div class="files-date">
+									<i class="glyph-icon icon-hand-o-right"></i>
+									Номер счета за услуги Телефонии
+								</div>
+							</div>
+                        </li>
+						<li>
+							<i class="files-icon glyph-icon font-green icon-info-circle"></i>
+							<div class="files-content">
+								<b>ИНТ (Платежи)</b>
+								<div class="files-date">
+									<i class="glyph-icon icon-hand-o-right"></i>
+									Платеж абон. плата за Интернет
+								</div>
+							</div>
+                        </li>
+						<li>
+							<i class="files-icon glyph-icon font-green icon-info-circle"></i>
+							<div class="files-content">
+								<b>АБМТ (Платежи)</b>
+								<div class="files-date">
+									<i class="glyph-icon icon-hand-o-right"></i>
+									Платеж абон. плата за Местную Телефонную связь
+								</div>
+							</div>
+                        </li>
+						<li>
+							<i class="files-icon glyph-icon font-green icon-info-circle"></i>
+							<div class="files-content">
+								<b>МГМН (Платежи)</b>
+								<div class="files-date">
+									<i class="glyph-icon icon-hand-o-right"></i>
+									Платеж за услуги МГ/МН связи
+								</div>
+							</div>
+                        </li>
+						<li>
+							<i class="files-icon glyph-icon font-green icon-info-circle"></i>
+							<div class="files-content">
+								<b>ОБРД (Платежи)</b>
+								<div class="files-date">
+									<i class="glyph-icon icon-hand-o-right"></i>
+									Платеж за приобретенное оборудование
+								</div>
+							</div>
+                        </li>
+						<li>
+							<i class="files-icon glyph-icon font-green icon-info-circle"></i>
+							<div class="files-content">
+								<b>ПРУ (Платежи)</b>
+								<div class="files-date">
+									<i class="glyph-icon icon-hand-o-right"></i>
+									Платеж за переустановку телефона
+								</div>
+							</div>
+                        </li>
+						<li>
+							<i class="files-icon glyph-icon font-green icon-info-circle"></i>
+							<div class="files-content">
+								<b>ИНОЕ (Платежи)</b>
+								<div class="files-date">
+									<i class="glyph-icon icon-hand-o-right"></i>
+									Платеж за прочие услуги
+								</div>
+							</div>
+                        </li>
+						<li>
+							<i class="files-icon glyph-icon font-red icon-info-circle"></i>
+							<div class="files-content">
+								<b>НЕУЧТ (Платежи)</b>
+								<div class="files-date">
+									<i class="glyph-icon icon-hand-o-right"></i>
+									Неизвестные платежи (невозможно провести)
+								</div>
+							</div>
+                        </li>
+                     </ul>
+                  </div>
+                  <div class="clear"></div>
+				  <a href="#" title="" data-toggle="collapse" data-target="#sidebar-toggle-6" class="popover-title">Условные обозначения (Счета клиентов) <span class="caret"></span></a>
+                  <div id="sidebar-toggle-6" class="collapse in">
+                     <ul class="files-box">
+                        <li>
+							<i class="files-icon glyph-icon font-red icon-info-circle"></i>
+							<div class="files-content">
+								<b>НЗВ (Статус номера счета клиента)</b>
+								<div class="files-date">
+									<i class="glyph-icon icon-hand-o-right"></i>
+									Невозможно определить номер счета
+								</div>
+							</div>
+                        </li>
+						<li>
+							<i class="files-icon glyph-icon font-green icon-info-circle"></i>
+							<div class="files-content">
+								<b>НЕТ (Статус номера счета клиента)</b>
+								<div class="files-date">
+									<i class="glyph-icon icon-hand-o-right"></i>
+									Нет счета по конкретной услуге
+								</div>
+							</div>
+                        </li>
+						<li>
+							<i class="files-icon glyph-icon font-green icon-info-circle"></i>
+							<div class="files-content">
+								<b>ИГН (Статус номера счета клиента)</b>
+								<div class="files-date">
+									<i class="glyph-icon icon-hand-o-right"></i>
+									Проигнорировать наличие счета по услуге
+								</div>
+							</div>
+                        </li>
+                     </ul>
+                  </div>
+                  <div class="clear"></div>
+                  <a href="#" title="" data-toggle="collapse" data-target="#sidebar-toggle-6" class="popover-title">Последние файлы отчетов <span class="caret"></span></a>
+                  <div id="sidebar-toggle-6" class="collapse in">
+                     <ul class="files-box">
+                      {% for report in reports %}
+                        <li>
+							<i class="files-icon glyph-icon font-green icon-file-word-o"></i>
+							<div class="files-content">
+								<b>{{ report.name_report }}.csv</b>
+								<div class="files-date">
+									<i class="glyph-icon icon-clock-o"></i> создан <b>{{ report.creation_date }}</b>
+								</div>
+							</div>
+							<div class="files-buttons">
+								<a href="#" class="btn btn-xs hover-info tooltip-button btn-download" id="{{ report.id }}" data-placement="left" title="Загрузить">
+									<i class="glyph-icon icon-cloud-download"></i>
+								</a>
+							</div>
+                        </li>
+                      {% endfor %}
+                     </ul>
+                  </div>
+			   </div>
+            </div>
+         </div>
+{#         <div id="loading">#}
+{#            <div class="svg-icon-loader"><img src="{% static 'assets/images/svg-loaders/bars.svg' %}" width="40" alt=""></div>#}
+{#         </div>#}
+         <div id="page-wrapper">
+            <div id="mobile-navigation"><button id="nav-toggle" class="collapsed" data-toggle="collapse" data-target="#page-sidebar"><span></span></button></div>
+            <div id="page-sidebar">
+               <div id="header-logo" class="logo-bg">
+                   <a href="/home/" class="logo-content-big" title="UPayment">
+                       UPayment <i>v0.0.1a</i>
+                       <span>Система управления платежами клиентов</span>
+                   </a>
+                   <a href="/home/" class="logo-content-small" title="DelightUI">
+                       UPayment <i>v0.0.1a</i>
+                       <span>Система управления платежами клиентов</span>
+                   </a>
+                   <a id="close-sidebar" href="#" title="Close sidebar">
+                       <i class="glyph-icon icon-outdent"></i></a>
+               </div>
+               <div class="scroll-sidebar">
+                  <ul id="sidebar-menu">
+                     <li class="header"><span>СТРАНИЦЫ</span></li>
+                     <li>
+						<a href="/home/" title="Начальная страница">
+							<i class="glyph-icon icon-bank"></i>
+							<span>Начальная страница</span>
+						</a>
+					</li>
+                  {% if user|in_group:"Администраторы" %}
+                  <li>
+                    <a href="javascript:void(0);" title="Настройки" class="active">
+                        <i class="glyph-icon icon-cogs"></i> 
+                        <span>Настройки</span>
+                    </a>
+                    <div class="sidebar-submenu">
+                        <ul>
+                            <li>
+                                <a href="/utm_settings/" title="Подключение к серверу"><span>Подключение к серверу</span></a>
+                            </li>
+                            <li>
+                                <a href="/sbr_profiles/" title="Профили СБР парсера"><span>Профили СБР парсера</span></a>
+                            </li>
+                            <li>
+                                <a href="/vzr_profiles/" title="Профили ВЗР парсера"><span>Профили ВЗР парсера</span></a>
+                            </li>
+                        </ul>        
+                    </div>
+                    </li>
+                  {% endif %}
+                     <li class="header"><span>ВЫПИСКИ</span></li>
+                     <li>
+                        <a href="javascript:void(0);" title="Выписки, загруженные на сервер">
+                            <i class="glyph-icon icon-plus-square-o"></i>
+                            <span>Загруженные</span>
+                        {% if uploaded_inv_count > 0 %}
+                            <span class="bs-badge badge-danger">{{ uploaded_inv_count }}</span>
+                        {% endif %}
+                        </a>
+                        <div class="sidebar-submenu">
+                        {% if uploaded_inv %}
+                           <ul>
+                           {% for inv in uploaded_inv %}
+                               <li><a href="/payments_in_invoice/{{ inv.id }}" title="{{ inv.name_invoice }}"><span>{{ inv.name_invoice }}</span></a></li>
+                           {% endfor %}
+                           </ul>
+                        {% else %}
+                            <ul>
+                              <li>
+                                  <a href="#" title="Ни одной выписки не загружено">
+                                      <span>Нет элементов для отображения</span>
+                                  </a>
+                              </li>
+                           </ul>
+                        {% endif %}
+                        </div>
+                     </li>
+                     <li>
+                        <a href="javascript:void(0);" title="Выписки, ожидающие подтверждения корректности">
+                            <i class="glyph-icon icon-clock-o"></i>
+                            <span>Ожидающие обработки</span>
+                        {% if waiting_inv_count > 0 %}
+                            <span class="bs-badge badge-danger">{{ waiting_inv_count }}</span>
+                        {% endif %}
+                        </a>
+                        <div class="sidebar-submenu">
+                        {% if waiting_inv %}
+                           <ul>
+                              <li>
+                                  <a href="/waiting_invoices/" title="Перейти к выпискам">
+                                      <span>Перейти к выпискам</span>
+                                  </a>
+                              </li>
+                           </ul>
+                        {% else %}
+                            <ul>
+                              <li>
+                                  <a href="#" title="Ни одна выписка не ожидает отправки на сервер">
+                                      <span>Нет элементов для отображения</span>
+                                  </a>
+                              </li>
+                           </ul>
+                        {% endif %}
+                        </div>
+                     </li>
+                     <li>
+                        <a href="javascript:void(0);" title="Последние 10 обработанных выписок">
+                            <i class="glyph-icon icon-linecons-wallet"></i>
+                            <span>Обработанные</span>
+                        {% if processed_inv_count > 0 %}
+                            <span class="bs-badge badge-danger">{{ processed_inv_count }}</span>
+                        {% endif %}
+                        </a>
+                        <div class="sidebar-submenu">
+                        {% if processed_inv %}
+                            <ul>
+                           {% for inv in processed_inv %}
+                               <li><a href="/processed_invoices/{{ inv.id }}" title="{{ inv.name_invoice }}"><span>{{ inv.name_invoice }}</span></a></li>
+                           {% endfor %}
+                           </ul>
+                        {% else %}
+                            <ul>
+                              <li>
+                                  <a href="#" title="Обработанные выписки отсутсвует в системе">
+                                      <span>Нет элементов для отображения</span>
+                                  </a>
+                              </li>
+                           </ul>
+                        {% endif %}
+                        </div>
+                     </li>
+                     <li class="header"><span>Отчеты</span></li>
+					 <li>
+						<a href="/reports/" title="Показать информацию по последним сгенерированным отчетам">
+							<i class="glyph-icon icon-file-text-o"></i>
+							<span>Последние отчеты</span>
+						</a>
+					</li>
+                  </ul>
+               </div>
+            </div>
+            <div id="page-content-wrapper">
+               <div id="page-content">
+                  <div id="page-header">
+                     <div id="header-nav-left">
+                        <a class="header-btn" id="logout-btn" href="/logout_user/" title="Выйти из системы"><i class="glyph-icon icon-sign-out"></i></a>
+                        <div class="user-account-btn dropdown">
+                           <a href="#" title="My Account" class="user-profile clearfix" data-toggle="dropdown"><img width="28" src="{% static 'assets/image-resources/gravatar.png' %}" alt="Profile image"> <span>Алексей Кинеев</span> <i class="glyph-icon icon-angle-down"></i></a>
+                           <div class="dropdown-menu float-right">
+                              <div class="box-sm">
+                                 <div class="login-box clearfix">
+                                    <div class="user-img">
+										<!-- <a href="#" title="" class="change-img">Change photo</a> -->
+										<img src="{% static 'assets/image-resources/gravatar.png' %}" alt="">
+									</div>
+                                    <div class="user-info">
+										<span>Алексей Кинеев
+											<i>Администратор системы</i>
+										</span>
+										<!-- <a href="#" title="Edit profile">Edit profile</a>
+										<a href="#" title="View notifications">View notifications</a> -->
+									</div>
+                                 </div>
+                                 <div class="divider"></div>
+                                 <!-- <ul class="reset-ul mrg5B">
+                                    <li><a href="#">View login page example <i class="glyph-icon float-right icon-caret-right"></i></a></li>
+                                    <li><a href="#">View lockscreen example <i class="glyph-icon float-right icon-caret-right"></i></a></li>
+                                    <li><a href="#">View account details <i class="glyph-icon float-right icon-caret-right"></i></a></li>
+                                 </ul> -->
+                                 <div class="button-pane button-pane-alt pad5L pad5R text-center"><a href="#" class="btn btn-flat display-block font-normal btn-danger"><i class="glyph-icon icon-envelope-o"></i> Вопрос администратору</a></div>
+                              </div>
+                           </div>
+                        </div>
+                     </div>
+                     <div id="header-nav-right">
+						<div class="dropdown" id="cloud-btn">
+							<a href="#" data-placement="bottom" class="tooltip-button hdr-btn" id="fullscreen-btn" title="На весь экран">
+								<i class="glyph-icon icon-arrows-alt"></i>
+							</a>
+						</div>
+						<div class="dropdown" id="dashnav-btn">
+                           <a href="#" data-toggle="dropdown" data-placement="bottom" class="popover-button-header tooltip-button" title="Панель действий"><i class="glyph-icon icon-navicon"></i></a>
+                           <div class="dropdown-menu float-left">
+                              <div class="box-sm">
+                                 <div class="pad5T pad5B pad10L pad10R dashboard-buttons-block clearfix">
+									<a href="#" class="btn btn-info vertical-button hover-info" title="Добавить профиль" data-toggle="modal" data-target="#myModalCreate">
+										<span class="glyph-icon icon-separator-vertical pad0A medium">
+											<i class="glyph-icon icon-plus-circle opacity-80 font-size-20"></i>
+										</span> 
+										Добавить профиль
+									</a>
+								</div>
+							  </div>
+                           </div>
+                        </div>
+                        <div class="dropdown" id="cloud-btn">
+							<a href="#" data-placement="bottom" class="tooltip-button sb-toggle-right" title="Полезная информация">
+								<i class="glyph-icon icon-exclamation-circle"></i>
+							</a>
+						</div>
+                     </div>
+                  </div>
+                  <script type="text/javascript" src="{% static 'assets/widgets/tabs/tabs.js' %}"></script>
+                  <div id="page-title">
+                     <h2>Настройки системы</h2>
+                     <p class="mrg15B">Профили парсера банковских выписок (СБР)</p>
+                  </div>
+                    <div class="col-md-12">
+                    {% for profile in profiles %}
+                    <div class="content-box">
+                        <h3 class="content-box-header bg-black">
+                            <i class="glyph-icon icon-suitcase"></i> 
+                            <a href="#collapse{{ profile.id }}" class="collapsed view-profile" data-toggle="collapse" title="Показать данные">{{ profile.profile_name }}</a>
+                            <div class="header-buttons-separator">                                    
+                                <a href="#" class="icon-separator" title="Редактировать профиль" data-toggle="modal" data-target="#myModalEdit{{ profile.id }}">
+                                    <i class="glyph-icon icon-font"></i>
+                                </a>
+                                <a href="#" class="icon-separator" title="Удалить профиль" onclick="window.location.href='/delete_sbr_parser_profile/{{ profile.id }}'">
+                                    <i class="glyph-icon icon-times"></i>
+                                </a>
+                            </div>
+                        </h3>
+                        <div class="content-box-wrapper panel-collapse collapse" id="collapse{{ profile.id }}" >
+                            <ul style="list-style-type: none;">
+                                <div class="divider"></div>
+                                <p><b>Переменные</b></p>
+                                <div class="divider"></div>
+                                <li>Разделитель - "{{ profile.delimeter }}"</li>
+                                <li>Позиция даты платежа - "{{ profile.date_position }}"</li>
+                                <li>Позиция времени платежа - "{{ profile.time_position }}"</li>
+                                <li>Позиция имени клиента - "{{ profile.name_position }}"</li>
+                                <li>Поизиция адреса клиента - "{{ profile.address_position }}"</li>
+                                <li>Поизиция комментария оператора - "{{ profile.comment_position }}"</li>
+                                <li>Поизиция суммы платежа - "{{ profile.summ_position }}"</li>
+                                <div class="divider"></div>
+                                <p><b>Пример банковской выписки</b></p>
+                                <div class="divider"></div>
+                                <p>{{ profile.example }}</p>
+                            </ul>
+                        </div>
+                    </div>        
+                    {% endfor %}              
+                    </div>
+				  
+                  <!-- Add profile modal -->
+                  <div class="modal fade" id="myModalCreate" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true">
+                    <div class="modal-dialog">
+                        <form method="post" action="/create_sbr_parser_profile/" class="form-horizontal bordered-row">
+                            <input type="hidden">
+                            <div class="modal-content">
+                                <div class="modal-header">
+                                    <button type="button" class="close" data-dismiss="modal" aria-hidden="true">&times;</button>
+                                    <h4 class="modal-title">Добавление нового профиля для СБР парсера</h4>
+                                </div>
+                                <div class="modal-body">
+                                    <div class="form-group">
+                                        <label class="col-sm-4 control-label">Имя профиля</label>
+                                        <div class="col-sm-8">
+                                            <input type="text" class="form-control" id="title-data" placeholder="Укажите уникальное имя профиля" name="profile_name">
+                                        </div>
+                                    </div>
+                                    <div class="form-group">
+                                        <label class="col-sm-4 control-label">Пример выписки</label>
+                                        <div class="col-sm-8">
+                                            <input type="text" class="form-control" id="example-data" placeholder="Укажите формат строки выписки" name="example">
+                                        </div>
+                                    </div>
+                                    <div class="form-group">
+                                        <label class="col-sm-4 control-label">Разделитель</label>
+                                        <div class="col-sm-8">
+                                            <input type="text" class="form-control" id="example-data" placeholder="Разделитель данных" name="delimeter">
+                                        </div>
+                                    </div>
+                                    <div class="form-group">
+                                        <label class="col-sm-4 control-label">Позиция даты</label>
+                                        <div class="col-sm-8">
+                                            <input type="number" class="form-control" id="date-data" placeholder="1" name="date_position">
+                                        </div>
+                                    </div>
+                                    <div class="form-group">
+                                        <label class="col-sm-4 control-label">Позиция времени</label>
+                                        <div class="col-sm-8">
+                                            <input type="number" class="form-control" id="time-data" placeholder="2" name="time_position">
+                                        </div>
+                                    </div>
+                                    <div class="form-group">
+                                        <label class="col-sm-4 control-label">Позиция имени клиента</label>
+                                        <div class="col-sm-8">
+                                            <input type="number" class="form-control" id="name-data" placeholder="3" name="name_position">
+                                        </div>
+                                    </div>
+                                    <div class="form-group">
+                                        <label class="col-sm-4 control-label">Позиция адреса клиента</label>
+                                        <div class="col-sm-8">
+                                            <input type="number" class="form-control" id="address-data" placeholder="4" name="address_position">
+                                        </div>
+                                    </div>
+                                    <div class="form-group">
+                                        <label class="col-sm-4 control-label">Позиция комментария</label>
+                                        <div class="col-sm-8">
+                                            <input type="number" class="form-control" id="comment-data" placeholder="5" name="comment_position">
+                                        </div>
+                                    </div>
+                                    <div class="form-group">
+                                        <label class="col-sm-4 control-label">Позиция с суммой</label>
+                                        <div class="col-sm-8">
+                                            <input type="number" class="form-control" id="summ-data" placeholder="6" name="summ_position">
+                                        </div>
+                                    </div>
+                                </div>
+                                <div class="modal-footer">
+                                    <button type="button" class="btn btn-default" data-dismiss="modal">Отмена</button> 
+                                    <button type="submit" class="btn btn-primary" id="create-btn">Сохранить</button>
+                                </div>
+                            </div>
+                        </form>
+                    </div>
+                </div>
+            {% for profile in profiles %}
+                <!-- Edit profile modal -->
+                <div class="modal fade" id="myModalEdit{{ profile.id }}" tabindex="-1" role="dialog" aria-labelledby="myModalLabelEdit" aria-hidden="true">
+                    <div class="modal-dialog">
+                        <form method="post" action="/edit_sbr_parser_profile/{{ profile.id }}" class="form-horizontal bordered-row">
+                            <input type="hidden">
+                            <div class="modal-content">
+                                <div class="modal-header">
+                                    <button type="button" class="close" data-dismiss="modal" aria-hidden="true">&times;</button>
+                                    <h4 class="modal-title">Редактирование профиля для СДР парсера ({{ profile.profile_name }})</h4>
+                                </div>
+                                <div class="modal-body">
+                                    <div class="form-group">
+                                        <label class="col-sm-4 control-label">Имя профиля</label>
+                                        <div class="col-sm-8">
+                                            <input type="text" class="form-control" id="title-data-{{ profile.id }}" placeholder="Укажите уникальное имя профиля" name="profile_name" value="{{ profile.profile_name }}">
+                                        </div>
+                                    </div>
+                                    <div class="form-group">
+                                        <label class="col-sm-4 control-label">Пример выписки</label>
+                                        <div class="col-sm-8">
+                                            <input type="text" class="form-control" id="example-data-{{ profile.id }}" placeholder="Укажите формат строки выписки" name="example" value="{{ profile.example }}">
+                                        </div>
+                                    </div>
+                                    <div class="form-group">
+                                        <label class="col-sm-4 control-label">Разделитель</label>
+                                        <div class="col-sm-8">
+                                            <input type="text" class="form-control" id="example-data-{{ profile.id }}" placeholder="Разделитель данных" name="delimeter" value="{{ profile.delimeter }}">
+                                        </div>
+                                    </div>
+                                    <div class="form-group">
+                                        <label class="col-sm-4 control-label">Позиция даты</label>
+                                        <div class="col-sm-8">
+                                            <input type="number" class="form-control" id="date-data-{{ profile.id }}" placeholder="1" name="date_position" value="{{ profile.date_position }}">
+                                        </div>
+                                    </div>
+                                    <div class="form-group">
+                                        <label class="col-sm-4 control-label">Позиция времени</label>
+                                        <div class="col-sm-8">
+                                            <input type="number" class="form-control" id="time-data-{{ profile.id }}" placeholder="2" name="time_position" value="{{ profile.time_position }}">
+                                        </div>
+                                    </div>
+                                    <div class="form-group">
+                                        <label class="col-sm-4 control-label">Позиция имени клиента</label>
+                                        <div class="col-sm-8">
+                                            <input type="number" class="form-control" id="name-data-{{ profile.id }}" placeholder="3" name="name_position" value="{{ profile.name_position }}">
+                                        </div>
+                                    </div>
+                                    <div class="form-group">
+                                        <label class="col-sm-4 control-label">Позиция адреса клиента</label>
+                                        <div class="col-sm-8">
+                                            <input type="number" class="form-control" id="address-data-{{ profile.id }}" placeholder="4" name="address_position" value="{{ profile.address_position }}">
+                                        </div>
+                                    </div>
+                                    <div class="form-group">
+                                        <label class="col-sm-4 control-label">Позиция комментария</label>
+                                        <div class="col-sm-8">
+                                            <input type="number" class="form-control" id="comment-data-{{ profile.id }}" placeholder="5" name="comment_position" value="{{ profile.comment_position }}">
+                                        </div>
+                                    </div>
+                                    <div class="form-group">
+                                        <label class="col-sm-4 control-label">Позиция с суммой</label>
+                                        <div class="col-sm-8">
+                                            <input type="number" class="form-control" id="summ-data-{{ profile.id }}" placeholder="6" name="summ_position" value="{{ profile.summ_position }}">
+                                        </div>
+                                    </div>
+                                </div>
+                                <div class="modal-footer">
+                                    <button type="button" class="btn btn-default" data-dismiss="modal">Отмена</button> 
+                                    <button type="submit" class="btn btn-primary" id="submit-btn">Сохранить</button>
+                                </div>
+                            </div>
+                        </form>
+                    </div>
+                </div>
+            {% endfor %}    
+                  </div>
+               </div>
+            </div>
+
+         {% block otherScripts %}
+         <script type="text/javascript" src="{% static 'assets/widgets/dropdown/dropdown.js' %}"></script>
+         <script type="text/javascript" src="{% static 'assets/widgets/tooltip/tooltip.js' %}"></script>
+         <script type="text/javascript" src="{% static 'assets/widgets/popover/popover.js' %}"></script>
+    {#	<script type="text/javascript" src="{% static 'assets/widgets/progressbar/progressbar.js' %}"></script>#}
+         <script type="text/javascript" src="{% static 'assets/widgets/button/button.js' %}"></script>
+         <script type="text/javascript" src="{% static 'assets/widgets/collapse/collapse.js' %}"></script>
+         <script type="text/javascript" src="{% static 'assets/widgets/superclick/superclick.js' %}"></script>
+         <script type="text/javascript" src="{% static 'assets/widgets/input-switch/inputswitch-alt.js' %}"></script>
+         <script type="text/javascript" src="{% static 'assets/widgets/slimscroll/slimscroll.js' %}"></script>
+         <script type="text/javascript" src="{% static 'assets/widgets/slidebars/slidebars.js' %}"></script>
+         <script type="text/javascript" src="{% static 'assets/widgets/slidebars/slidebars-demo.js' %}"></script>
+         <script type="text/javascript" src="{% static 'assets/widgets/charts/piegage/piegage.js' %}"></script>
+         <script type="text/javascript" src="{% static 'assets/widgets/charts/piegage/piegage-demo.js' %}"></script>
+         <script type="text/javascript" src="{% static 'assets/widgets/screenfull/screenfull.js' %}"></script>
+         <script type="text/javascript" src="{% static 'assets/widgets/content-box/contentbox.js' %}"></script>
+         <script type="text/javascript" src="{% static 'assets/widgets/material/material.js' %}"></script>
+    {#	<script type="text/javascript" src="{% static 'assets/widgets/material/ripples.js' %}"></script>#}
+         <script type="text/javascript" src="{% static 'assets/widgets/overlay/overlay.js' %}"></script>
+         <script type="text/javascript" src="{% static 'assets/widgets/modal/modal.js' %}"></script>
+         <script type="text/javascript" src="{% static 'assets/js-init/widgets-init.js' %}"></script>
+         <script type="text/javascript" src="{% static 'assets/themes/admin/layout.js' %}"></script>
+      {% endblock %}
+      </div>
+   </body>
+</html>
